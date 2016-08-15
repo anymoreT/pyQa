@@ -1,0 +1,16 @@
+eclipse.preferences.version=1
+encoding//dianRongQa/database/mysqlUtil.py=utf-8
+encoding//dianRongQa/database/oracleUtil.py=utf-8
+encoding//dianRongQa/global_list/global_var.py=utf-8
+encoding//dianRongQa/httpHander/httpHandler.py=utf-8
+encoding//dianRongQa/log/log.py=utf-8
+encoding//dianRongQa/utils/tools.py=utf-8
+encoding//dianRongQa/utils/webDriver.py=utf-8
+encoding//dianRongQa/web/Button.py=utf-8
+encoding//dianRongQa/web/CheckBox.py=utf-8
+encoding//dianRongQa/web/Link.py=utf-8
+encoding//dianRongQa/web/Table.py=utf-8
+encoding//dianRongQa/web/Text.py=utf-8
+encoding//dianRongQa/web/TextInput.py=utf-8
+encoding//dianRongQa/web/webElement.py=utf-8
+encoding/setup.py=utf-8
