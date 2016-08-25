@@ -4,6 +4,7 @@ import time
 
 
 class Log(object):
+    #打印错误日志，抛出异常
     @staticmethod
     def log_error_info(info):
         timestamp = time.strftime("%Y-%m-%d %H:%M:%S:")
@@ -22,7 +23,8 @@ class Log(object):
     def log_info_for_result(info):
         timestamp = time.strftime("%Y-%m-%d %H:%M:%S:")    
         print(info + "\n")
-        
+     
+    #打印日志  
     @staticmethod
     def log_info(info):
         timestamp = time.strftime("%Y-%m-%d %H:%M:%S:")    

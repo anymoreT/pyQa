@@ -18,14 +18,15 @@ class CrmOracle(object):
         database_str = "%s:%s/%s"%(self .host, self.port, self.db)
         self.oracle_instance  = cx_Oracle.connect(self.user,  self.password,  database_str)
        
-            
+     #执行oracel语句       
     def ececute(self,  sql):
         cursor = self.oracle_instance .cursor()
         cursor.execute(sql)
         # cursor.execute("select count(*) from sl$actor")
         result = cursor.fetchmany(5)
         return result
-     
+    
+    #执行非查询语句　 
     def do_no_query_action(self, sql):
         cursor = self.oracle_instance.cursor()
         cursor.execute(sql)

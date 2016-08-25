@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import pymysql
-from frameWork.log.log import Log
+from dianRongQa.log.log import Log
 import pdb
 
 class MysqlUtil(object):
@@ -11,6 +11,8 @@ class MysqlUtil(object):
         except:
             Log.log_error_info("fail to connect db %s %s %s %s %s \n" % (host, user, passwd, db, port))
     
+    #查询mysql语句
+    #sql_str 为查询语句
     def query(self, sql_str): 
         result = []  
         cur = self.conn.cursor()
@@ -18,6 +20,8 @@ class MysqlUtil(object):
         result = cur.fetchall()
         return result 
     
+    #执行mysql语句
+    #sql_str 为语句
     def  execute_sql(self, sql_str):
         result = []  
         cur = self.conn.cursor()

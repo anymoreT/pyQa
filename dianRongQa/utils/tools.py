@@ -7,10 +7,13 @@ import datetime
 import pdb
 
 class Tools(object):
+    
+    #读取指定的yaml文件
     @staticmethod
     def get_config(path):
         return yaml.load(open(path,'r')) 
     
+    #随机得到电话号码
     @staticmethod
     def get_random_phone_number():
         phone_pre = ["139",'131','132','133','158','156','134','155','153','151','159','170','177','179']
@@ -18,6 +21,7 @@ class Tools(object):
         phone =   phone_pre[random_index] + time.strftime("%m%d%H%S")
         return phone 
     
+    #随机得到一串字符串
     @staticmethod 
     def get_random_person_id():
         person_id =  "id" + time.strftime("%y%m%d%H%M%S")
