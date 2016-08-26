@@ -6,7 +6,7 @@ import pdb
    
 class HttpHandle(object):
     #数据类型定义
-    TYPES = {"STRING" : str, "HASH" : dict, "INT" : int, "FLOAT" : float, "LIST" : list, "BOOL" : bool}
+    TYPES = {"STRING" : str, "HASH" : dict, "INT" : int, "FLOAT" : float, "LIST" : list, "BOOL" : bool, "NULL": None}
     def __init__(self):
         self.http_hander = requests.session()
         self.http_response = None
@@ -15,11 +15,24 @@ class HttpHandle(object):
         self.http_payload = None
         self.http_request= None
       
-     #获得正在处理的http session实例    
+    #获得正在处理的http session实例    
     def get_http_hanlder(self):
         return self.http_hander
     
-     #设置正在处理的http session实例   
+    #更改URL,将指定参数替换{0},{1}
+    def replace_paramter_for_url(self, url, *paramters):
+        request_str = ""
+        if len(paramters) == 1:
+            request_str = url.format(paramters[0])
+        elif  len(paramters) == 2:
+            request_str = url.format(paramters[0],paramters[1])
+        elif  len(paramters) == 3:
+            request_str = url.format(paramters[0],paramters[1],paramters[2])    
+        else:
+            return request_str
+        return request_str
+    
+    #设置正在处理的http session实例   
     def set_http_hanlder(self, http_handler):
         self.http_hander = http_handler
 
@@ -189,8 +202,13 @@ class HttpHandle(object):
         for key in args:
             content = content[key]
         for key,value in target_struct.items():
-            if not  isinstance(content[key], HttpHandle.TYPES[value]):
-                Log.log_error_info("Verify..., the type of key %s is not %s "%(key, value))
+            #类型是None,需要特别处理
+            if value == "NULL":
+                if content[key] is not None:
+                    Log.log_error_info("Verify..., the type of key %s is not None type"%(key))
+            else:        
+                if not  isinstance(content[key], HttpHandle.TYPES[value]):
+                    Log.log_error_info("Verify..., the type of key %s is not %s "%(key, value))
         Log.log_info("Verify..., response deep key type is ok.")  
     
     

@@ -4,6 +4,7 @@ import time
 import random
 import platform
 import datetime
+import sys
 import pdb
 
 class Tools(object):
@@ -89,7 +90,41 @@ class Tools(object):
     
     @staticmethod 
     def get_yesterday_date():
-    #2016-07-03 17:13:59
+       #2016-07-03 17:13:59
        yearerday = time.time() - 24*60*60
        yearerday_time = time.localtime(yearerday)
        return time.strftime("%Y-%m-%d %H:%M:%S", yearerday_time)
+     
+
+    #获取命令行启动，输入的测试集参数
+    #第一个参数是运行环境，第二个运行的测试集
+    #eg python debut.test Demo Smoke
+    @staticmethod
+    def get_test_suit_paramter():  
+            if len(sys.argv) > 2:
+                return  sys.argv[2].strip() 
+            else:
+                return "regression"   
+      
+    #获得测试环境,从命令行获得       
+    @staticmethod
+    def get_test_suit_env():  
+            if len(sys.argv) > 1:
+                return  sys.argv[1].strip() 
+            else:
+                return "Demo"           
+      
+    #获取命令行启动，输入参数,从命令行获得       
+    @staticmethod
+    def get_paramters():  
+        return  sys.argv
+          
+    @staticmethod 
+    #使用方式： @unittest.skipUnless(runTagIn("smoke","regression"),"skip case if not in tags") 　
+    #可以设置某个测试案例属于那个测试案例集合，便于过滤测试案例
+    def runCaseIn(*tags):
+        run_testSuit =  Tools.get_test_suit_paramter()
+        if run_testSuit in tags:
+            return True
+        else:
+            return False  

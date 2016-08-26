@@ -8,13 +8,17 @@
 python setup.py check
 打包命令：
 python setup.py sdist
+
 安装包：
-sudo pip install DianRongQa-1.0.0.tar.gz
+sudo pip install dianRongQa-x.x.x.tar.gz
+
+卸载包：
+sudo pip uninstall dianRongQa
 
 
 cx_Oracle安装：
 该报需要支持oracel的操作
-１．　安装dpk
+１．安装dpk
 apt-get isntall  oracle-instantclient12.1-basic_12.1.0.2.0-1_amd64.deb
 apt-get isntall  oracle-instantclient12.1-devel_12.1.0.2.0-1_amd64.deb
 apt-get isntall oracle-instantclient12.1-sqlplus_12.1.0.2.0-1_amd64.deb

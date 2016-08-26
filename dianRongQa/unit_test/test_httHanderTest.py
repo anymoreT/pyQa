@@ -7,18 +7,44 @@ from requests.models import Response
 import pdb
 from dianRongQa.log.log import Log
 
+
+def test_replace_paramter_for_url():
+    origin_url = "http://www.baidu/{0}"
+    instance = httpHandler.HttpHandle()
+    parm0 = "news"
+    new_url = instance.replace_paramter_for_url(origin_url, parm0)
+    TestCase().assertTrue("http://www.baidu/news" == new_url)
+    
+    origin_url = "http://www.baidu/{0}/test/{1}"
+    parm0 = "news"
+    parm1 = "auto"
+    new_url = instance.replace_paramter_for_url(origin_url, parm0, parm1)
+    TestCase().assertTrue("http://www.baidu/news/test/auto" == new_url)
+    
+    origin_url = "http://www.baidu/{0}/test/{1}?name={2}"
+    parm0 = "news"
+    parm1 = "auto"
+    parm2 = "ben"
+    new_url = instance.replace_paramter_for_url(origin_url, parm0, parm1,parm2)
+    TestCase().assertTrue("http://www.baidu/news/test/auto?name=ben" == new_url)
+    Log.log_info("test_replace_paramter_for_url is ok")
+
+    
 def tes_resonse_deep_key_is_struct():
     '''
     #可以验证如下的类型
     #TYPES = {"STRING" : str, "HASH" : dict, "INT" : int, "FLOAT" : float, "LIST" : list, "BOOL" : bool}
     '''
-    content = b'{"content": {"list": [{"name": "string", "index":1,"verify":true, "type": { "name": "string","parent": "string","path": "string","description": "string", "title": true,"order": 0,"icon": "string" },"hot": true,"platform": [  "desktop" ], "from": "string", "until": "string", "locale": "string", "staticLink": "string", "thumbnail": "string", "content": "string", "htmlContent": "string", "description": "string" }],"totalRecords": 0},"result": "string","errors": ["string"]}'
+    content = b'{"content": {"list": [{"name": "string", "birthday":null,"index":1,"verify":true, "type": { "name": "string","parent": null,"path": "string","description": "string", "title": true,"order": 0,"icon": "string" },"hot": true,"platform": [  "desktop" ], "from": "string", "until": "string", "locale": "string", "staticLink": "string", "thumbnail": "string", "content": "string", "htmlContent": "string", "description": "string" }],"totalRecords": 0},"result": "string","errors": ["string"]}'
     response = Response()
     setattr(response, '_content',  content)
     instance = httpHandler.HttpHandle()
     instance.http_response = response
     instance.response_deep_key_is_struct(target_struct = {"content" : "HASH", "result" :"STRING", "errors" : "LIST"})
-    instance.response_deep_key_is_struct("content", "list", 0,  target_struct = {"name" : "STRING", "type" :"HASH", "index" : "INT", "verify" : "BOOL"})
+    instance.response_deep_key_is_struct("content", "list", 0,  target_struct = {"name" : "STRING", "type" :"HASH", "birthday":"NULL","index" : "INT", "verify" : "BOOL"})
+
+
+
 
 def test_get_response_body():
         content = b'{"content": true, "int":1}'
@@ -100,8 +126,19 @@ def test_response_body_should_be_dictionary_struct():
         instance.response_dictionary_should_have_key_value("content",True)
         instance.response_dictionary_should_have_key_value("int",1)
         instance.response_string_should_include("content")
+        
+def test_conver_json_str_response_to_struct():
+        content = b'{"content": true, "int":1}'
+        response = Response()
+        setattr(response, '_content',  content)
+        instance = httpHandler.HttpHandle()
+        instance.http_response = response
+        TestCase().assertTrue( {"content": True, "int":1} == instance.conver_json_str_response_to_struct())
+               
+        
 
 def run_unit_test():
+    test_replace_paramter_for_url()
     tes_resonse_deep_key_is_struct()
     test_get_response_body()
     test_print_response_body()
@@ -110,5 +147,6 @@ def run_unit_test():
     test_response_code_status_should_be()
     test_response_body_should_be_list_struct()
     test_response_body_should_be_dictionary_struct()
+    test_conver_json_str_response_to_struct()
     
 run_unit_test()

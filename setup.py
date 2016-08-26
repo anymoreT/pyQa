@@ -22,12 +22,13 @@ def read(fname):
  
  
  
-NAME ="DianRongQa"
+NAME ="dianRongQa"
 """
 名字，一般放你包的名字即可
 """
  
-PACKAGES =["dianRongQa","dianRongQa/database","dianRongQa/global_list","dianRongQa/httpHander","dianRongQa/log","dianRongQa/utils","dianRongQa/web"]
+PACKAGES =["dianRongQa","dianRongQa/database","dianRongQa/global_list","dianRongQa/httpHander","dianRongQa/log","dianRongQa/utils","dianRongQa/web",
+                     "dianRongQa/unit_test"]
 """
 包含的包，可以多个，这是一个列表
 """
@@ -56,14 +57,14 @@ AUTHOR_EMAIL ="249773304@qq.com"
 作者的邮件地址
 """
  
-URL ="http://blog.useasp.net/"
+URL =""
 """
 你这个包的项目地址，如果有，给一个吧，没有你直接填写在PyPI你这个包的地址也是可以的
 """
  
-VERSION ="1.0.0"
+VERSION ="1.4.0"
 """
-版本生成时间:  2016-08-15
+最后版本生成时间:  2016-08-23
 """
  
 LICENSE ="MIT"
