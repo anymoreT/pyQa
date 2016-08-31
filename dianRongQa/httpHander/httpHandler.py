@@ -132,6 +132,11 @@ class HttpHandle(object):
     #将response装换成dic,list等结构,并返回
     def get_response_struct(self):         
         return self.conver_response_body_to_struct()
+    
+    
+     #将response装换成json结构,并返回
+    def get_response_json_struct(self):         
+        return self.conver_json_str_response_to_struct()
      
     #检查状态码是指定的状态码
     def response_code_status_should_be(self, status_code):

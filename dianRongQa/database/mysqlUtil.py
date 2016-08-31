@@ -22,7 +22,7 @@ class MysqlUtil(object):
     
     #执行mysql语句
     #sql_str 为语句
-    def  execute_sql(self, sql_str):
+    def  do_no_query_action(self, sql_str):
         result = []  
         cur = self.conn.cursor()
         result = cur.execute(sql_str)

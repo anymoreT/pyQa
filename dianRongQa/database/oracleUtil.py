@@ -4,7 +4,7 @@ import cx_Oracle
 import pdb
 
 
-class CrmOracle(object):
+class OracleUtil(object):
     def __init__(self, host, port, db, user, password):
         self .host = host
         self.port = port
@@ -19,11 +19,10 @@ class CrmOracle(object):
         self.oracle_instance  = cx_Oracle.connect(self.user,  self.password,  database_str)
        
      #执行oracel语句       
-    def ececute(self,  sql):
+    def query(self,  sql):
         cursor = self.oracle_instance .cursor()
         cursor.execute(sql)
-        # cursor.execute("select count(*) from sl$actor")
-        result = cursor.fetchmany(5)
+        result = cursor.fetchall()
         return result
     
     #执行非查询语句　 
