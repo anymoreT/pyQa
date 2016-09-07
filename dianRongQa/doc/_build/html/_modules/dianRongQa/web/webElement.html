@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dianRongQa.web.webElement &#8212; dianRongQa 1.5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="dianRongQa 1.5.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for dianRongQa.web.webElement</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="k">import</span> <span class="n">By</span>
+<span class="kn">from</span> <span class="nn">dianRongQa.global_list.global_var</span> <span class="k">import</span> <span class="n">Global_factory</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">dianRongQa.log.log</span> <span class="k">import</span> <span class="n">Log</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.keys</span> <span class="k">import</span> <span class="n">Keys</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.action_chains</span> <span class="k">import</span> <span class="n">ActionChains</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.remote.webelement</span> <span class="k">import</span> <span class="n">WebElement</span> <span class="k">as</span> <span class="n">SeleniumWebElement</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pdb</span>
+<div class="viewcode-block" id="WebElement"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement">[docs]</a><span class="k">class</span> <span class="nc">WebElement</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_type</span><span class="p">,</span> <span class="n">locator</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">element_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">locator</span> <span class="o">=</span> <span class="n">locator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">Global_factory</span><span class="o">.</span><span class="n">get_driver</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">ActionChains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
+      
+<div class="viewcode-block" id="WebElement.element"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.element">[docs]</a>    <span class="k">def</span> <span class="nf">element</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="n">By</span><span class="o">.</span><span class="n">ID</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;xpath&quot;</span><span class="p">:</span> 
+            <span class="nb">type</span> <span class="o">=</span> <span class="n">By</span><span class="o">.</span><span class="n">XPATH</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> 
+            <span class="nb">type</span> <span class="o">=</span> <span class="n">By</span><span class="o">.</span><span class="n">NAME</span>   
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;class&quot;</span><span class="p">:</span> 
+            <span class="nb">type</span> <span class="o">=</span> <span class="n">By</span><span class="o">.</span><span class="n">CLASS_NAME</span>  
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;link_text&quot;</span><span class="p">:</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="n">By</span><span class="o">.</span><span class="n">LINK_TEXT</span>     
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="n">By</span><span class="o">.</span><span class="n">XPATH</span> 
+        <span class="k">try</span><span class="p">:</span>                                         
+            <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span>  <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">locator</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span>   </div>
+            <span class="c1">#Log.log_error_info(&quot;Couldn&#39;t find element %s \n&quot; % ( self.__locator))</span>
+    
+<div class="viewcode-block" id="WebElement.get_element"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.get_element">[docs]</a>    <span class="k">def</span> <span class="nf">get_element</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>  <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span>   </div>
+     
+    <span class="c1">#input_type:  None, js </span>
+<div class="viewcode-block" id="WebElement.input"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.input">[docs]</a>    <span class="k">def</span> <span class="nf">input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">input_type</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">input_type</span> <span class="o">==</span> <span class="s2">&quot;js&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">input_type</span> <span class="o">==</span> <span class="s2">&quot;JS&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">execute_script</span><span class="p">(</span><span class="s2">&quot;arguments[0].value=&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="o">%</span>  <span class="p">(</span><span class="nb">str</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_element</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>    
+                <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t input </span><span class="si">%s</span><span class="s2"> for </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">))</span></div>
+    
+<div class="viewcode-block" id="WebElement.clear"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t clear </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">))</span></div>
+    <span class="c1">#click_type: None, js   </span>
+<div class="viewcode-block" id="WebElement.click"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.click">[docs]</a>    <span class="k">def</span> <span class="nf">click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">click_type</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">click_type</span> <span class="o">==</span> <span class="s2">&quot;js&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">click_type</span> <span class="o">==</span> <span class="s2">&quot;JS&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">execute_script</span><span class="p">(</span><span class="s2">&quot;arguments[0].click()&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_element</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>    
+                <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;fail to  click </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="WebElement.send_tab_key"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.send_tab_key">[docs]</a>    <span class="k">def</span> <span class="nf">send_tab_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">TAB</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;fail to  send tab key for </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">))</span>   </div>
+     
+<div class="viewcode-block" id="WebElement.send_enter_key"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.send_enter_key">[docs]</a>    <span class="k">def</span> <span class="nf">send_enter_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">ENTER</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;fail to  send tab key for </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">))</span>         </div>
+    
+<div class="viewcode-block" id="WebElement.is_exist"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.is_exist">[docs]</a>    <span class="k">def</span> <span class="nf">is_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span><span class="o">.</span><span class="n">is_displayed</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span> </div>
+    
+<div class="viewcode-block" id="WebElement.should_not_enable"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.should_not_enable">[docs]</a>    <span class="k">def</span> <span class="nf">should_not_enable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_element</span><span class="p">()</span><span class="o">.</span><span class="n">is_enabled</span><span class="p">():</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> should not be enable</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">))</span>   </div>
+ 
+<div class="viewcode-block" id="WebElement.should_enable"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.should_enable">[docs]</a>    <span class="k">def</span> <span class="nf">should_enable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_element</span><span class="p">()</span><span class="o">.</span><span class="n">is_enabled</span><span class="p">():</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> should be enable</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">))</span>   </div>
+    
+<div class="viewcode-block" id="WebElement.wait_element_enable"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.wait_element_enable">[docs]</a>    <span class="k">def</span> <span class="nf">wait_element_enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span> <span class="o">=</span>  <span class="mi">30</span><span class="p">,</span> <span class="n">interval</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">frequence</span>  <span class="o">=</span>  <span class="nb">int</span><span class="p">(</span><span class="n">timeout</span><span class="o">/</span><span class="n">interval</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">frequence</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span><span class="o">.</span><span class="n">is_enabled</span><span class="p">():</span> 
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">interval</span><span class="p">))</span>
+                <span class="k">return</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">interval</span><span class="p">))</span> 
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;fail to wait element </span><span class="si">%s</span><span class="s2"> enable</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">))</span>           </div>
+    
+<div class="viewcode-block" id="WebElement.get_text"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.get_text">[docs]</a>    <span class="k">def</span> <span class="nf">get_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1">#实际使用中发现，需要等待2秒才能稳定得到文本</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> 
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span><span class="o">.</span><span class="n">text</span> 
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;fail to get text for </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">))</span>  </div>
+            
+<div class="viewcode-block" id="WebElement.wait_element_present"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.wait_element_present">[docs]</a>    <span class="k">def</span> <span class="nf">wait_element_present</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span> <span class="o">=</span>  <span class="mi">30</span><span class="p">,</span> <span class="n">interval</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">frequence</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">timeout</span><span class="o">/</span><span class="n">interval</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">frequence</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  
+                <span class="k">return</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">interval</span><span class="p">))</span> 
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;fail to wait element </span><span class="si">%s</span><span class="s2"> present.locator is </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">locator</span><span class="p">))</span>  </div>
+    
+<div class="viewcode-block" id="WebElement.should_exist"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.should_exist">[docs]</a>    <span class="k">def</span> <span class="nf">should_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">is_displayed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span><span class="o">.</span><span class="n">is_displayed</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_displayed</span><span class="p">:</span>
+                <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not existed</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">))</span>   
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is has not display method</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">))</span>   </div>
+
+
+<div class="viewcode-block" id="WebElement.should_not_exist"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.should_not_exist">[docs]</a>    <span class="k">def</span> <span class="nf">should_not_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">element</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">is_displayed</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">is_displayed</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">is_displayed</span><span class="p">:</span>
+                <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is existed</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">))</span>   
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="WebElement.should_include_text"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.should_include_text">[docs]</a>    <span class="k">def</span> <span class="nf">should_include_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_text</span><span class="p">):</span>   
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">include_text</span><span class="p">)</span>
+        <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">  is not include </span><span class="si">%s</span><span class="s2">, the real text is </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">,</span> <span class="n">include_text</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>   </div>
+       
+                  
+<div class="viewcode-block" id="WebElement.should_not_include_text"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.should_not_include_text">[docs]</a>    <span class="k">def</span> <span class="nf">should_not_include_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_text</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">include_text</span><span class="p">)</span>
+        <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="o">!=</span> <span class="n">index</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> include </span><span class="si">%s</span><span class="s2">, the real text is </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">,</span> <span class="n">include_text</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span> </div>
+    
+<div class="viewcode-block" id="WebElement.should_equal_text"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.should_equal_text">[docs]</a>    <span class="k">def</span> <span class="nf">should_equal_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expected_text</span><span class="p">):</span>   
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="o">!=</span> <span class="n">expected_text</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">  is not equal  </span><span class="si">%s</span><span class="s2">, the real text is </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">expected_text</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">))</span>   </div>
+         
+<div class="viewcode-block" id="WebElement.mouse_over"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.mouse_over">[docs]</a>    <span class="k">def</span> <span class="nf">mouse_over</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">move_to_element</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_element</span><span class="p">())</span>   
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>  
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>             </div>
+        
+<div class="viewcode-block" id="WebElement.wait_element_disappear"><a class="viewcode-back" href="../../../dianRongQa.web.html#dianRongQa.web.webElement.WebElement.wait_element_disappear">[docs]</a>    <span class="k">def</span> <span class="nf">wait_element_disappear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span> <span class="o">=</span>  <span class="mi">30</span><span class="p">,</span> <span class="n">interval</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">frequence</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">timeout</span><span class="o">/</span><span class="n">interval</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">frequence</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">web_element</span> <span class="ow">is</span>  <span class="kc">None</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  
+                <span class="k">return</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">interval</span><span class="p">))</span> 
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;fail to wait element </span><span class="si">%s</span><span class="s2"> present.locator is </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">locator</span><span class="p">))</span>  </div></div>
+            
+                
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, huangyong.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
