@@ -8,6 +8,12 @@ class HttpHandle(object):
     #数据类型定义
     TYPES = {"STRING" : str, "HASH" : dict, "INT" : int, "FLOAT" : float, "LIST" : list, "BOOL" : bool, "NULL": None}
     def __init__(self):
+        '''
+        This fonction does something.
+        :param a: lalala
+        :type a: str
+        :param b: hahaha
+        '''
         self.http_hander = requests.session()
         self.http_response = None
         self.status_code = None

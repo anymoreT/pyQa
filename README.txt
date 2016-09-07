@@ -42,3 +42,13 @@ export NLS_LANG=AMERICAN_AMERICA.AL32UTF8
 ５．安装ox-Oracle
 pip install cx-Oracle
 
+
+文档生成
+１．　pip install Sphinx
+2.  进入项目目录，运行　sphinx-quickstart
+注意：auto insert dostring哪一个选项要选择 y，文档目录填　doc
+3. 进入doc目录，找到conf.py目录，添加
+　import sys
+sys.path.insert(0, '..')
+４．sphinx-apidoc -o . ..
+５．make html

@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//dianRongQa/database/mysqlUtil.py=utf-8
 encoding//dianRongQa/database/oracleUtil.py=utf-8
+encoding//dianRongQa/doc/conf.py=utf-8
 encoding//dianRongQa/global_list/global_var.py=utf-8
 encoding//dianRongQa/httpHander/httpHandler.py=utf-8
 encoding//dianRongQa/log/log.py=utf-8

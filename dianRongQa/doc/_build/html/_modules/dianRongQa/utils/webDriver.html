@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dianRongQa.utils.webDriver &#8212; dianRongQa 1.5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="dianRongQa 1.5.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for dianRongQa.utils.webDriver</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="k">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">dianRongQa.global_list.global_var</span> <span class="k">import</span> <span class="n">Global_factory</span>
+<span class="c1">#from sqlalchemy.sql.sqltypes import Interval</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.options</span> <span class="k">import</span> <span class="n">Options</span>
+<span class="kn">from</span> <span class="nn">dianRongQa.log.log</span> <span class="k">import</span> <span class="n">Log</span>
+
+<div class="viewcode-block" id="WebDriver"><a class="viewcode-back" href="../../../dianRongQa.utils.html#dianRongQa.utils.webDriver.WebDriver">[docs]</a><span class="k">class</span> <span class="nc">WebDriver</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">driver</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="WebDriver.start_driver"><a class="viewcode-back" href="../../../dianRongQa.utils.html#dianRongQa.utils.webDriver.WebDriver.start_driver">[docs]</a>    <span class="k">def</span> <span class="nf">start_driver</span><span class="p">(</span><span class="n">brower</span> <span class="o">=</span> <span class="s1">&#39;chrome&#39;</span> <span class="p">):</span>
+        <span class="k">if</span> <span class="n">brower</span>  <span class="o">==</span> <span class="s1">&#39;chrome&#39;</span> <span class="p">:</span>
+<span class="c1">#             chromeOptions = Options()</span>
+<span class="c1">#             prefs = {&#39;profile.default_content_settings.multiple-automatic-downloads&#39;: 1, &#39;download.prompt_for_download&#39; : False, &#39;download.default_directory&#39; : &quot;d:&quot;}</span>
+<span class="c1">#             chromeOptions.add_experimental_option(&quot;prefs&quot;, prefs)</span>
+<span class="c1">#             WebDriver.driver = webdriver.Chrome(chrome_options = chromeOptions)</span>
+            <span class="n">WebDriver</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>   
+            <span class="n">profile</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">FirefoxProfile</span><span class="p">()</span> 
+            <span class="c1">#bug造成每次访问firefox必须访问Mozilla网站．等待其他版本</span>
+            <span class="c1">#profile.set_preference(&quot;xpinstall.signatures.required&quot;, False);</span>
+<span class="c1">#             profile.set_preference(&quot;app.support.baseURL&quot;, &quot;https://www.baidu.com&quot;)</span>
+<span class="c1">#             profile.set_preference(&quot;app.update.url.manual&quot;, &quot;https://www.baidu.com&quot;)</span>
+<span class="c1">#             profile.set_preference(&quot;app.update.url.details&quot;, &quot;https://www.baidu.com&quot;)</span>
+
+<span class="c1">#             profile.set_preference( &quot;startup.homepage_welcome_url&quot;,  &quot;about:startpage&quot;)</span>
+<span class="c1">#             profile.set_preference( &quot;browser.startup.homepage&quot;,  &quot;about:startpage&quot;)</span>
+           <span class="c1"># profile.set_preference()</span>
+            <span class="n">WebDriver</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">(</span><span class="n">firefox_profile</span><span class="o">=</span><span class="n">profile</span><span class="p">)</span>
+     
+        <span class="n">WebDriver</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">maximize_window</span><span class="p">()</span>
+        <span class="n">Global_factory</span><span class="o">.</span><span class="n">set_driver</span><span class="p">(</span><span class="n">WebDriver</span><span class="o">.</span><span class="n">driver</span><span class="p">)</span></div>
+     
+
+            
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="WebDriver.go_to_url"><a class="viewcode-back" href="../../../dianRongQa.utils.html#dianRongQa.utils.webDriver.WebDriver.go_to_url">[docs]</a>    <span class="k">def</span> <span class="nf">go_to_url</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+        <span class="n">WebDriver</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span></div>
+        
+    <span class="nd">@staticmethod</span>    
+<div class="viewcode-block" id="WebDriver.wait_page_load"><a class="viewcode-back" href="../../../dianRongQa.utils.html#dianRongQa.utils.webDriver.WebDriver.wait_page_load">[docs]</a>    <span class="k">def</span> <span class="nf">wait_page_load</span><span class="p">(</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">interval</span> <span class="o">=</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">timeout</span><span class="o">/</span><span class="n">interval</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s2">&quot;complete&quot;</span> <span class="o">==</span> <span class="n">WebDriver</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">execute_script</span><span class="p">(</span><span class="s1">&#39;return document.readyState&#39;</span><span class="p">):</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>  
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="s2">&quot;page is still loading&quot;</span><span class="p">)</span>           </div>
+        <span class="c1">#WebDriver.driver.wait_for_page_to_load()</span>
+        
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="WebDriver.refresh_page"><a class="viewcode-back" href="../../../dianRongQa.utils.html#dianRongQa.utils.webDriver.WebDriver.refresh_page">[docs]</a>    <span class="k">def</span> <span class="nf">refresh_page</span><span class="p">():</span>
+        <span class="n">WebDriver</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
+        
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="WebDriver.quit"><a class="viewcode-back" href="../../../dianRongQa.utils.html#dianRongQa.utils.webDriver.WebDriver.quit">[docs]</a>    <span class="k">def</span> <span class="nf">quit</span><span class="p">():</span>
+        <span class="k">try</span> <span class="p">:</span>
+            <span class="n">WebDriver</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;+++++close driver meet error&quot;</span> <span class="p">)</span>     </div>
+        
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="WebDriver.get_cookie"><a class="viewcode-back" href="../../../dianRongQa.utils.html#dianRongQa.utils.webDriver.WebDriver.get_cookie">[docs]</a>    <span class="k">def</span> <span class="nf">get_cookie</span><span class="p">():</span>
+        <span class="k">pass</span></div>
+    
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="WebDriver.del_all_cookie"><a class="viewcode-back" href="../../../dianRongQa.utils.html#dianRongQa.utils.webDriver.WebDriver.del_all_cookie">[docs]</a>    <span class="k">def</span> <span class="nf">del_all_cookie</span><span class="p">():</span>
+        <span class="n">WebDriver</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">delete_all_visible_cookies</span><span class="p">()</span></div>
+    
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="WebDriver.back"><a class="viewcode-back" href="../../../dianRongQa.utils.html#dianRongQa.utils.webDriver.WebDriver.back">[docs]</a>    <span class="k">def</span> <span class="nf">back</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">WebDriver</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">go_back</span><span class="p">()</span></div>
+    
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="WebDriver.switch_to_frame"><a class="viewcode-back" href="../../../dianRongQa.utils.html#dianRongQa.utils.webDriver.WebDriver.switch_to_frame">[docs]</a>    <span class="k">def</span> <span class="nf">switch_to_frame</span><span class="p">(</span><span class="n">frame_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">         :Usage:</span>
+<span class="sd">            driver.switch_to.frame(&#39;frame_name&#39;)</span>
+<span class="sd">            driver.switch_to.frame(1)</span>
+<span class="sd">            driver.switch_to.frame(driver.find_elements_by_tag_name(&quot;iframe&quot;)[0])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">WebDriver</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">switch_to_frame</span><span class="p">(</span><span class="n">frame_name</span><span class="p">)</span></div>
+     
+    <span class="nd">@staticmethod</span>   
+<div class="viewcode-block" id="WebDriver.get_window_handles"><a class="viewcode-back" href="../../../dianRongQa.utils.html#dianRongQa.utils.webDriver.WebDriver.get_window_handles">[docs]</a>    <span class="k">def</span> <span class="nf">get_window_handles</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">WebDriver</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">window_handles</span></div>
+    
+    <span class="nd">@staticmethod</span>     
+<div class="viewcode-block" id="WebDriver.switch_to_window"><a class="viewcode-back" href="../../../dianRongQa.utils.html#dianRongQa.utils.webDriver.WebDriver.switch_to_window">[docs]</a>    <span class="k">def</span> <span class="nf">switch_to_window</span><span class="p">(</span><span class="n">window</span><span class="p">):</span>
+        <span class="n">WebDriver</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">switch_to</span><span class="o">.</span><span class="n">window</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>    </div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, huangyong.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

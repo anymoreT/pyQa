@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dianRongQa.httpHander.httpHandler &#8212; dianRongQa 1.5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="dianRongQa 1.5.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for dianRongQa.httpHander.httpHandler</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">dianRongQa.log.log</span> <span class="k">import</span> <span class="n">Log</span>
+<span class="kn">import</span> <span class="nn">pdb</span>
+   
+<div class="viewcode-block" id="HttpHandle"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle">[docs]</a><span class="k">class</span> <span class="nc">HttpHandle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c1">#数据类型定义</span>
+    <span class="n">TYPES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;STRING&quot;</span> <span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;HASH&quot;</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="s2">&quot;INT&quot;</span> <span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;FLOAT&quot;</span> <span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s2">&quot;LIST&quot;</span> <span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="s2">&quot;BOOL&quot;</span> <span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="s2">&quot;NULL&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_hander</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_response_body</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_payload</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_request</span><span class="o">=</span> <span class="kc">None</span>
+      
+    <span class="c1">#获得正在处理的http session实例    </span>
+<div class="viewcode-block" id="HttpHandle.get_http_hanlder"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.get_http_hanlder">[docs]</a>    <span class="k">def</span> <span class="nf">get_http_hanlder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_hander</span></div>
+    
+    <span class="c1">#更改URL,将指定参数替换{0},{1}</span>
+<div class="viewcode-block" id="HttpHandle.replace_paramter_for_url"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.replace_paramter_for_url">[docs]</a>    <span class="k">def</span> <span class="nf">replace_paramter_for_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="o">*</span><span class="n">paramters</span><span class="p">):</span>
+        <span class="n">request_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">paramters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">request_str</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">paramters</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">elif</span>  <span class="nb">len</span><span class="p">(</span><span class="n">paramters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">request_str</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">paramters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">paramters</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">elif</span>  <span class="nb">len</span><span class="p">(</span><span class="n">paramters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">request_str</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">paramters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">paramters</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">paramters</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>    
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">request_str</span>
+        <span class="k">return</span> <span class="n">request_str</span></div>
+    
+    <span class="c1">#设置正在处理的http session实例   </span>
+<div class="viewcode-block" id="HttpHandle.set_http_hanlder"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.set_http_hanlder">[docs]</a>    <span class="k">def</span> <span class="nf">set_http_hanlder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_handler</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_hander</span> <span class="o">=</span> <span class="n">http_handler</span></div>
+
+    <span class="c1">#发送post请求，带data数据</span>
+<div class="viewcode-block" id="HttpHandle.do_post"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.do_post">[docs]</a>    <span class="k">def</span> <span class="nf">do_post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span>  <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_payload</span>  <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_request</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_hander</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">http_request</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_payload</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> 
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span></div>
+    
+    <span class="c1">#发送post请求，带json格式数据</span>
+<div class="viewcode-block" id="HttpHandle.do_post_with_json_payload"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.do_post_with_json_payload">[docs]</a>    <span class="k">def</span> <span class="nf">do_post_with_json_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">json</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="c1">#         json_data = playload</span>
+        <span class="c1">#json_data =  json.dumps(playload)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_payload</span>  <span class="o">=</span> <span class="n">json</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_request</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_hander</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">http_request</span><span class="p">,</span> <span class="n">json</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_payload</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> 
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span></div>
+    
+    <span class="c1">#发送post请求，带json格式字符串数据</span>
+<div class="viewcode-block" id="HttpHandle.do_post_with_json_string_payload"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.do_post_with_json_string_payload">[docs]</a>    <span class="k">def</span> <span class="nf">do_post_with_json_string_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">playload</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">json_data</span> <span class="o">=</span>  <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">playload</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_payload</span>  <span class="o">=</span> <span class="n">json_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_request</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_hander</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">http_request</span><span class="p">,</span> <span class="n">json</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_payload</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> 
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span></div>
+    
+    <span class="c1">#get 请求</span>
+<div class="viewcode-block" id="HttpHandle.do_get"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.do_get">[docs]</a>    <span class="k">def</span> <span class="nf">do_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_hander</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span></div>
+   
+    <span class="c1">#设置header　 </span>
+<div class="viewcode-block" id="HttpHandle.set_header"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.set_header">[docs]</a>    <span class="k">def</span> <span class="nf">set_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header_dic</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_hander</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">header_dic</span></div>
+    
+    <span class="c1">#得到header　</span>
+<div class="viewcode-block" id="HttpHandle.get_header"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.get_header">[docs]</a>    <span class="k">def</span> <span class="nf">get_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_hander</span><span class="o">.</span><span class="n">headers</span> </div>
+    
+    <span class="c1">#更新header</span>
+<div class="viewcode-block" id="HttpHandle.update_header"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.update_header">[docs]</a>    <span class="k">def</span> <span class="nf">update_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header_dic</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_hander</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">header_dic</span><span class="p">)</span></div>
+    
+    <span class="c1">#删除header    </span>
+<div class="viewcode-block" id="HttpHandle.delete_header"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.delete_header">[docs]</a>    <span class="k">def</span> <span class="nf">delete_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header_list</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">header_list</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_hander</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>  </div>
+    
+<span class="c1">#     #无参数get请求</span>
+<span class="c1">#     def do_get_with_no_paramter(self, request):</span>
+<span class="c1">#         self.http_response = self.http_hander.get(request) </span>
+<span class="c1">#         return self.http_response</span>
+     
+     <span class="c1">#有参数get请求  </span>
+<div class="viewcode-block" id="HttpHandle.do_get_with_with_paramter"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.do_get_with_with_paramter">[docs]</a>    <span class="k">def</span> <span class="nf">do_get_with_with_paramter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_hander</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">request</span> <span class="o">+</span> <span class="s2">&quot;?</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">param</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>   
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span></div>
+    
+    <span class="c1">#得到请求结果状态码</span>
+<div class="viewcode-block" id="HttpHandle.get_response_status_code"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.get_response_status_code">[docs]</a>    <span class="k">def</span> <span class="nf">get_response_status_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span><span class="o">.</span><span class="n">status_code</span></div>
+     
+      
+    <span class="c1">#得到响应文本 </span>
+<div class="viewcode-block" id="HttpHandle.get_response_body"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.get_response_body">[docs]</a>    <span class="k">def</span> <span class="nf">get_response_body</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span>  <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">http_response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">http_response_body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">http_response_body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_response</span><span class="o">.</span><span class="n">content</span>     
+        <span class="k">return</span>  <span class="bp">self</span><span class="o">.</span><span class="n">http_response_body</span></div>
+    
+    <span class="c1">#打印结果</span>
+<div class="viewcode-block" id="HttpHandle.print_response_body"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.print_response_body">[docs]</a>    <span class="k">def</span> <span class="nf">print_response_body</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+        <span class="n">Log</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_response_body</span><span class="p">())</span></div>
+        
+    <span class="c1">#将响应内容转换成python结构 </span>
+<div class="viewcode-block" id="HttpHandle.conver_response_body_to_struct"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.conver_response_body_to_struct">[docs]</a>    <span class="k">def</span>  <span class="nf">conver_response_body_to_struct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#去除null,用None代替null,否则eval 不能处理</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span> <span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response_body</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>       
+        <span class="k">except</span> <span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conver_json_str_response_to_struct</span><span class="p">()</span>
+        <span class="k">return</span>   <span class="n">response</span> </div>
+    
+    <span class="c1">#将json格式文本响应内容转换成python结构 </span>
+<div class="viewcode-block" id="HttpHandle.conver_json_str_response_to_struct"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.conver_json_str_response_to_struct">[docs]</a>    <span class="k">def</span>  <span class="nf">conver_json_str_response_to_struct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response_body</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span>  <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span>  </div>
+    
+    <span class="c1">#将response装换成dic,list等结构,并返回</span>
+<div class="viewcode-block" id="HttpHandle.get_response_struct"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.get_response_struct">[docs]</a>    <span class="k">def</span> <span class="nf">get_response_struct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>         
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conver_response_body_to_struct</span><span class="p">()</span></div>
+    
+    
+     <span class="c1">#将response装换成json结构,并返回</span>
+<div class="viewcode-block" id="HttpHandle.get_response_json_struct"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.get_response_json_struct">[docs]</a>    <span class="k">def</span> <span class="nf">get_response_json_struct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>         
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conver_json_str_response_to_struct</span><span class="p">()</span></div>
+     
+    <span class="c1">#检查状态码是指定的状态码</span>
+<div class="viewcode-block" id="HttpHandle.response_code_status_should_be"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.response_code_status_should_be">[docs]</a>    <span class="k">def</span> <span class="nf">response_code_status_should_be</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status_code</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">status_code</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response_status_code</span><span class="p">():</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;status  code should be </span><span class="si">%d</span><span class="s2">, but the  real value is </span><span class="si">%d</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">status_code</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">get_response_status_code</span><span class="p">()))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Verify..., status code is ok.&quot;</span><span class="p">)</span>    </div>
+         
+    <span class="c1">#检查响应文本是一个list格式     </span>
+<div class="viewcode-block" id="HttpHandle.response_body_should_be_list_struct"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.response_body_should_be_list_struct">[docs]</a>    <span class="k">def</span> <span class="nf">response_body_should_be_list_struct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>   
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conver_response_body_to_struct</span><span class="p">(),</span>  <span class="n">HttpHandle</span><span class="o">.</span><span class="n">TYPES</span><span class="p">[</span><span class="s1">&#39;LIST&#39;</span><span class="p">]):</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;status code should be list&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Verify..., response struct is ok.&quot;</span><span class="p">)</span>    </div>
+    
+    <span class="c1">#检查响应文本是一个dict格式  </span>
+<div class="viewcode-block" id="HttpHandle.response_body_should_be_dictionary_struct"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.response_body_should_be_dictionary_struct">[docs]</a>    <span class="k">def</span> <span class="nf">response_body_should_be_dictionary_struct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>   
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conver_response_body_to_struct</span><span class="p">(),</span> <span class="n">HttpHandle</span><span class="o">.</span><span class="n">TYPES</span><span class="p">[</span><span class="s1">&#39;HASH&#39;</span><span class="p">]):</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;Verify..., response struct is not dictionary.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>    
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Verify..., response struct is ok.&quot;</span><span class="p">)</span>  </div>
+    
+    <span class="c1">#只能比对第一层的dic</span>
+    <span class="c1">#检查响应里面有指定字段</span>
+<div class="viewcode-block" id="HttpHandle.response_dictionary_should_have_key"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.response_dictionary_should_have_key">[docs]</a>    <span class="k">def</span>  <span class="nf">response_dictionary_should_have_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span> 
+        <span class="n">dic</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">conver_response_body_to_struct</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dic</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;Verify..., response key has no key: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Verify..., response key is ok.&quot;</span><span class="p">)</span>  </div>
+            
+    <span class="c1">#只能比对第一层的dic</span>
+     <span class="c1">#检查响应里面有指定的list里面的字段</span>
+<div class="viewcode-block" id="HttpHandle.response_dictionary_should_have_keys"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.response_dictionary_should_have_keys">[docs]</a>    <span class="k">def</span>  <span class="nf">response_dictionary_should_have_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_list</span> <span class="o">=</span> <span class="p">[]):</span> 
+        <span class="n">dic</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">conver_response_body_to_struct</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">key_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dic</span><span class="p">:</span>
+                <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;Verify..., response key has no key: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Verify..., response keys is ok.&quot;</span><span class="p">)</span>     </div>
+            
+                 
+   
+    <span class="c1">#只能比对第一层的dic</span>
+    <span class="c1">#检查响应里面有指定字段和内容</span>
+<div class="viewcode-block" id="HttpHandle.response_dictionary_should_have_key_value"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.response_dictionary_should_have_key_value">[docs]</a>    <span class="k">def</span>  <span class="nf">response_dictionary_should_have_key_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span> 
+        <span class="n">dic</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">conver_response_body_to_struct</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dic</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;Verify..., the response dictionary  value is </span><span class="si">%s</span><span class="s2">, not </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">dic</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">value</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Verify..., response key,value is ok.&quot;</span><span class="p">)</span>     </div>
+   
+   
+    <span class="c1">#将response看出一串字符串  </span>
+    <span class="c1">#响应文本包含指定的字符串</span>
+<div class="viewcode-block" id="HttpHandle.response_string_should_include"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.response_string_should_include">[docs]</a>    <span class="k">def</span> <span class="nf">response_string_should_include</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub_string</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">sub_string</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response_body</span><span class="p">():</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;Verify..., response string does no  inclue string: </span><span class="si">%s</span><span class="s2">, real response is: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">sub_string</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response_body</span><span class="p">()))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Verify..., response content is ok.&quot;</span><span class="p">)</span>  </div>
+   
+   
+     <span class="c1">#将response看出一串字符串  </span>
+    <span class="c1">#响应文本不包含指定的字符串</span>
+<div class="viewcode-block" id="HttpHandle.response_string_should_not_include"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.response_string_should_not_include">[docs]</a>    <span class="k">def</span> <span class="nf">response_string_should_not_include</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub_string</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">sub_string</span>  <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response_body</span><span class="p">():</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;Verify..., response string does   inclue string: </span><span class="si">%s</span><span class="s2">, real response is: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">sub_string</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response_body</span><span class="p">()))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Log</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Verify..., response content is ok.&quot;</span><span class="p">)</span>    </div>
+   
+     
+    <span class="c1">#可以检查检查响应的深层级字段的类型</span>
+    <span class="c1">#kwargs: target_struct={}</span>
+    <span class="c1">#e.g response_deep_key_is_struct(&quot;content&quot;, &quot;list&quot;, 0,  target_struct = {&quot;name&quot; : &quot;STRING&quot;, &quot;type&quot; :&quot;HASH&quot;, &quot;index&quot; : &quot;INT&quot;, &quot;verify&quot; : &quot;BOOL&quot;})</span>
+<div class="viewcode-block" id="HttpHandle.response_deep_key_is_struct"><a class="viewcode-back" href="../../../dianRongQa.httpHander.html#dianRongQa.httpHander.httpHandler.HttpHandle.response_deep_key_is_struct">[docs]</a>    <span class="k">def</span> <span class="nf">response_deep_key_is_struct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">target_struct</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;target_struct&quot;</span><span class="p">]</span>
+        <span class="n">content</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">conver_response_body_to_struct</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">target_struct</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1">#类型是None,需要特别处理</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;NULL&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">content</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;Verify..., the type of key </span><span class="si">%s</span><span class="s2"> is not None type&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>        
+                <span class="k">if</span> <span class="ow">not</span>  <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">HttpHandle</span><span class="o">.</span><span class="n">TYPES</span><span class="p">[</span><span class="n">value</span><span class="p">]):</span>
+                    <span class="n">Log</span><span class="o">.</span><span class="n">log_error_info</span><span class="p">(</span><span class="s2">&quot;Verify..., the type of key </span><span class="si">%s</span><span class="s2"> is not </span><span class="si">%s</span><span class="s2"> &quot;</span><span class="o">%</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+        <span class="n">Log</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Verify..., response deep key type is ok.&quot;</span><span class="p">)</span>  </div></div>
+    
+    
+    
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, huangyong.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
