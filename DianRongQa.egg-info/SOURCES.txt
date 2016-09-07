@@ -1,12 +1,12 @@
 README.txt
 setup.py
-DianRongQa.egg-info/PKG-INFO
-DianRongQa.egg-info/SOURCES.txt
-DianRongQa.egg-info/dependency_links.txt
-DianRongQa.egg-info/top_level.txt
-DianRongQa.egg-info/zip-safe
 dianRongQa/HTMLTestRunner.py
 dianRongQa/__init__.py
+dianRongQa.egg-info/PKG-INFO
+dianRongQa.egg-info/SOURCES.txt
+dianRongQa.egg-info/dependency_links.txt
+dianRongQa.egg-info/top_level.txt
+dianRongQa.egg-info/zip-safe
 dianRongQa/database/__init__.py
 dianRongQa/database/mysqlUtil.py
 dianRongQa/database/oracleUtil.py
@@ -17,6 +17,7 @@ dianRongQa/httpHander/httpHandler.py
 dianRongQa/log/__init__.py
 dianRongQa/log/log.py
 dianRongQa/unit_test/__init__.py
+dianRongQa/unit_test/test_db.py
 dianRongQa/unit_test/test_httHanderTest.py
 dianRongQa/utils/__init__.py
 dianRongQa/utils/tools.py

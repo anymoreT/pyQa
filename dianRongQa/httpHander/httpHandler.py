@@ -36,36 +36,33 @@ class HttpHandle(object):
     def set_http_hanlder(self, http_handler):
         self.http_hander = http_handler
 
-    def do_post_with_header(self, url, form_data=None, headers=None):
-        pass
-    
     #发送post请求，带data数据
-    def do_post(self, url, form_data=None,):
-        self.http_payload  = form_data
+    def do_post(self, url,  data=None, **kwargs):
+        self.http_payload  = data
         self.http_request = url
-        self.http_response = self.http_hander.post(self.http_request, data = self.http_payload) 
+        self.http_response = self.http_hander.post(self.http_request, data = self.http_payload,**kwargs) 
         return self.http_response
     
     #发送post请求，带json格式数据
-    def do_post_with_json_payload(self, url, playload = None):
-        json_data = playload
+    def do_post_with_json_payload(self, url, json = None,  **kwargs):
+#         json_data = playload
         #json_data =  json.dumps(playload)
-        self.http_payload  = json_data
+        self.http_payload  = json
         self.http_request = url
-        self.http_response = self.http_hander.post(self.http_request, json = self.http_payload) 
+        self.http_response = self.http_hander.post(self.http_request, json = self.http_payload, **kwargs) 
         return self.http_response
     
     #发送post请求，带json格式字符串数据
-    def do_post_with_json_string_payload(self, url, playload = None):
+    def do_post_with_json_string_payload(self, url, playload = None, **kwargs):
         json_data =  json.loads(playload)
         self.http_payload  = json_data
         self.http_request = url
-        self.http_response = self.http_hander.post(self.http_request, json = self.http_payload) 
+        self.http_response = self.http_hander.post(self.http_request, json = self.http_payload, **kwargs) 
         return self.http_response
     
     #get 请求
-    def do_get(self, url):
-        self.http_response = self.http_hander.get(url)
+    def do_get(self, url, **kwargs):
+        self.http_response = self.http_hander.get(url, **kwargs)
         return self.http_response
    
     #设置header　 
@@ -85,14 +82,14 @@ class HttpHandle(object):
         for key in header_list:
             del self.http_hander.headers[key]  
     
-    #无参数get请求
-    def do_get_with_no_paramter(self, request):
-        self.http_response = self.http_hander.get(request) 
-        return self.http_response
+#     #无参数get请求
+#     def do_get_with_no_paramter(self, request):
+#         self.http_response = self.http_hander.get(request) 
+#         return self.http_response
      
      #有参数get请求  
-    def do_get_with_with_paramter(self, request, param):
-        self.http_response = self.http_hander.get(request + "?%s"%(param))   
+    def do_get_with_with_paramter(self, request, param, **kwargs):
+        self.http_response = self.http_hander.get(request + "?%s"%(param), **kwargs)   
         return self.http_response
     
     #得到请求结果状态码
@@ -197,6 +194,16 @@ class HttpHandle(object):
             Log.log_error_info("Verify..., response string does no  inclue string: %s, real response is: %s"%(sub_string, self.get_response_body()))
         else:
             Log.log_info("Verify..., response content is ok.")  
+   
+   
+     #将response看出一串字符串  
+    #响应文本不包含指定的字符串
+    def response_string_should_not_include(self, sub_string):
+        if sub_string  in self.get_response_body():
+            Log.log_error_info("Verify..., response string does   inclue string: %s, real response is: %s"%(sub_string, self.get_response_body()))
+        else:
+            Log.log_info("Verify..., response content is ok.")    
+   
      
     #可以检查检查响应的深层级字段的类型
     #kwargs: target_struct={}
