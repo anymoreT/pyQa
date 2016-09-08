@@ -10,6 +10,9 @@ class WebDriver(object):
     driver = None
     @staticmethod
     def start_driver(brower = 'chrome' ):
+        '''
+        启动driver，默认是chrome
+        '''
         if brower  == 'chrome' :
 #             chromeOptions = Options()
 #             prefs = {'profile.default_content_settings.multiple-automatic-downloads': 1, 'download.prompt_for_download' : False, 'download.default_directory' : "d:"}
@@ -36,6 +39,9 @@ class WebDriver(object):
             
     @staticmethod
     def go_to_url(url):
+        '''
+        进入指定网页
+        '''
         WebDriver.driver.get(url)
         
     @staticmethod    
@@ -53,10 +59,16 @@ class WebDriver(object):
         
     @staticmethod
     def refresh_page():
+        '''
+        刷新页面
+        '''
         WebDriver.driver.refresh()
         
     @staticmethod
     def quit():
+        '''
+        关闭driver
+        '''
         try :
             WebDriver.driver.quit()
         except:
@@ -68,10 +80,16 @@ class WebDriver(object):
     
     @staticmethod
     def del_all_cookie():
+        '''
+        删除所有的cookies
+        '''
         WebDriver.driver.delete_all_visible_cookies()
     
     @staticmethod
     def back(self):
+        '''
+        回退到上一页
+        '''
         WebDriver.driver.go_back()
     
     @staticmethod
@@ -86,8 +104,14 @@ class WebDriver(object):
      
     @staticmethod   
     def get_window_handles():
+        '''
+        获得当前driver打开的所有tab
+        '''
         return WebDriver.driver.window_handles
     
     @staticmethod     
     def switch_to_window(window):
+        '''
+        切换到指定的tab窗口
+        '''
         WebDriver.driver.switch_to.window(window)    
