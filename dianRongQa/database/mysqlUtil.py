@@ -26,4 +26,5 @@ class MysqlUtil(object):
         result = []  
         cur = self.conn.cursor()
         result = cur.execute(sql_str)
+        cur.execute("commit")
         return result 

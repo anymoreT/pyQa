@@ -73,7 +73,7 @@ class HttpHandle(object):
         '''
         self.http_payload  = json
         self.http_request = url
-        self.http_response = self.http_hander.post(self.http_request, data = self.http_payload, **kwargs) 
+        self.http_response = self.http_hander.post(self.http_request, json = self.http_payload, **kwargs) 
         return self.http_response
     
     #发送post请求，带json格式字符串数据
@@ -81,10 +81,9 @@ class HttpHandle(object):
         '''
         发送json格式字符串post请求
         '''
-        json_data =  json.loads(playload)
-        self.http_payload  = json_data
+        self.http_payload  =  json.loads(playload)
         self.http_request = url
-        self.http_response = self.http_hander.post(self.http_request, data = self.http_payload, **kwargs) 
+        self.http_response = self.http_hander.post(self.http_request, json = self.http_payload, **kwargs) 
         return self.http_response
     
     #get 请求
