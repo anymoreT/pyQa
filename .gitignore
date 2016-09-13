@@ -6,3 +6,4 @@
 *.pydevproject
 *.prefs
 dianRongQa/doc/*.*
+/dianRongQa/doc/*.*
