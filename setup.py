@@ -38,7 +38,9 @@ DESCRIPTION ="this is a test package for packing python liberaries tutorial."
 关于这个包的描述
 """
  
-LONG_DESCRIPTION =read("README.txt")
+#LONG_DESCRIPTION =read("README.txt")
+LONG_DESCRIPTION ="本版本用于验证测试ＵＩ和api接口"
+
 """
 参见read方法说明
 """
@@ -62,7 +64,7 @@ URL =""
 你这个包的项目地址，如果有，给一个吧，没有你直接填写在PyPI你这个包的地址也是可以的
 """
  
-VERSION ="1.5.3"
+VERSION ="1.5.3.01"
 """
 最后版本生成时间:  2016-09-08
 """
