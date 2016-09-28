@@ -43,6 +43,21 @@ def tes_resonse_deep_key_is_struct():
     instance.response_deep_key_is_struct(target_struct = {"content" : "HASH", "result" :"STRING", "errors" : "LIST"})
     instance.response_deep_key_is_struct("content", "list", 0,  target_struct = {"name" : "STRING", "type" :"HASH", "birthday":"NULL","index" : "INT", "verify" : "BOOL"})
 
+def response_deep_key_value_is_right():
+    '''
+    #可以数据正确性
+    '''
+    content = '{"data": {"name":"黄勇","info":[{"id":12345,"gender":null}]} }'
+    response = Response()
+    setattr(response, '_content',  content)
+    instance = httpHandler.HttpHandle()
+    instance.http_response = response
+    instance.print_response_body()
+    instance.get_response_struct()
+    instance.response_deep_key_value_is_right("data", target_value= {"name" :"黄勇"})
+    instance.response_deep_key_value_is_right("data", "info", 0, target_value= {"id":12345})
+    instance.response_deep_key_value_is_right("data", "info", 0, target_value= {"id":12345,"gender":None})
+    instance.response_deep_key_value_is_right("data", target_value=  {"name":"黄勇","info":[{"id":12345,"gender":None}]})
 
 
 
@@ -122,7 +137,9 @@ def test_response_body_should_be_dictionary_struct():
         instance.response_body_should_be_dictionary_struct()
         instance. response_dictionary_should_have_key("content")    
         instance. response_dictionary_should_have_key("int")    
+        instance.response_dictionary_should_not_have_key("int1")
         instance.response_dictionary_should_have_keys(["content","int"])
+        instance.response_dictionary_should_have_not_keys(["content1","int1"])
         instance.response_dictionary_should_have_key_value("content",True)
         instance.response_dictionary_should_have_key_value("int",1)
         instance.response_string_should_include("content")
@@ -148,5 +165,6 @@ def run_unit_test():
     test_response_body_should_be_list_struct()
     test_response_body_should_be_dictionary_struct()
     test_conver_json_str_response_to_struct()
+    response_deep_key_value_is_right()
     
 run_unit_test()

@@ -248,6 +248,18 @@ class HttpHandle(TestCase):
             Log.log_info("Verify..., response key is ok.")  
             
     #只能比对第一层的dic
+    #检查响应里面有指定字段
+    def  response_dictionary_should_not_have_key(self, key): 
+        '''
+        判断响应的格式有指定字段
+        '''
+        dic =  self.conver_response_body_to_struct()
+        if key  in dic:
+            Log.log_error_info("Verify..., response key has  key: %s"%(key))
+        else:
+            Log.log_info("Verify...,ok, response has not key..")  
+                        
+    #只能比对第一层的dic
      #检查响应里面有指定的list里面的字段
     def  response_dictionary_should_have_keys(self, key_list = []): 
         '''
@@ -260,7 +272,18 @@ class HttpHandle(TestCase):
         else:
             Log.log_info("Verify..., response keys is ok.")     
             
-                 
+    #只能比对第一层的dic
+     #检查响应里面有指定的list里面的字段
+    def  response_dictionary_should_have_not_keys(self, key_list = []): 
+        '''
+        判断响应的格式有指定的字段集合
+        '''
+        dic =  self.conver_response_body_to_struct()
+        for key in key_list:
+            if key  in dic:
+                Log.log_error_info("Verify..., response key has  key: %s"%(key))
+        else:
+            Log.log_info("Verify..., ok, response has not keys .")                 
    
     #只能比对第一层的dic
     #检查响应里面有指定字段和内容
@@ -322,5 +345,21 @@ class HttpHandle(TestCase):
                     Log.log_error_info("Verify..., the type of key %s is not %s "%(key, value))
         Log.log_info("Verify..., response deep key type is ok.")  
     
-    
+    #可以检查检查响应的深层级字段的内容
+    #kwargs: target_struct={}
+    #e.g response_deep_key_is_struct("content", "list", 0,  target_value = {"name" : "benhuang",  "index" : "7", "verify" : "true"})
+    def response_deep_key_value_is_right(self, *args, **kwargs):
+        '''
+        判断响应的python格式的指定字段格式如target_struct指定的格式．
+        eg.  response_deep_key_is_struct("content", "list", 0,  target_value = {"name" : "benhuang",  "index" : "7", "verify" : "true"})
+        该结果表示将结果的result['content']['list'][0]同target_struct指定的字段与响应结果做对比
+        '''
+        target_struct = kwargs["target_value"]
+        content =  self.conver_response_body_to_struct()
+        for key in args:
+            content = content[key]
+        for key,value in target_struct.items():
+                if content[key] != value:
+                    Log.log_error_info("Verify..., the value of key %s is not %s,it is %s "%(key, value,content[key]))
+        Log.log_info("Verify..., response deep key,value  is ok.")   
     
