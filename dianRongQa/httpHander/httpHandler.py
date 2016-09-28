@@ -3,14 +3,16 @@ import requests
 import json
 from dianRongQa.log.log import Log
 import pdb
+from unittest import TestCase
    
-class HttpHandle(object):
-    #数据类型定义
-    TYPES = {"STRING" : str, "HASH" : dict, "INT" : int, "FLOAT" : float, "LIST" : list, "BOOL" : bool, "NULL": None}
+class HttpHandle(TestCase):
     '''
+    集成TestCase，主要是为了能够使用各种assert判定
     系统定义如下格式转意：
     TYPES = {"STRING" : str, "HASH" : dict, "INT" : int, "FLOAT" : float, "LIST" : list, "BOOL" : bool, "NULL": None}
     '''
+    TYPES = {"STRING" : str, "HASH" : dict, "INT" : int, "FLOAT" : float, "LIST" : list, "BOOL" : bool, "NULL": None}
+ 
     def __init__(self):
         '''
         该类主要用户发送http请求，得到响应值，检查各种响应内容
