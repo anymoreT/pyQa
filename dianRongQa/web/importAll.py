@@ -5,3 +5,5 @@ from .Button import ButtonElement
 from .Link import LinkElement
 from .CheckBox import CheckBoxElement 
 from .Table import TableElement
+from .RadioButton import RadioButtonElement
+from .FileTextInput import FileTextInputElement

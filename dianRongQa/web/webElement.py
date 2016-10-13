@@ -247,5 +247,10 @@ class WebElement(object):
             time.sleep(int(interval)) 
         else:
             Log.log_error_info("fail to wait element %s present.locator is %s\n" % (self.class_name,self.locator))  
-            
-                
+     
+    def set_attribute(self, attribute, vaule):
+        '''
+        设置属性
+        '''
+        el = self.element()       
+        self.driver.execute_script("arguments[0].setAttribute('%s' ,'%s)"%(attribute, vaule), el)                

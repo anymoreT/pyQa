@@ -5,3 +5,6 @@ Vesrsion1.5.4.00:
 	1. httphandle集成unittest.TestCase类，用于集成各种assert方法
 Vesrsion1.5.4.0１:
 	1. httphandle添加response_deep_key_value_is_right等多个验证方法
+Vesrsion1.5.4.02:
+	1. 添加属性修改
+	2.添加RadioButton,FileInput基础元素	
