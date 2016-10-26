@@ -45,7 +45,7 @@ LONG_DESCRIPTION ="本版本用于验证测试ＵＩ和api接口"
 参见read方法说明
 """
  
-KEYWORDS ="test python package"
+KEYWORDS ="pyOpenQa"
 """
 关于当前包的一些关键字，方便PyPI进行分类。
 """
@@ -64,9 +64,9 @@ URL =""
 你这个包的项目地址，如果有，给一个吧，没有你直接填写在PyPI你这个包的地址也是可以的
 """
  
-VERSION ="1.5.4.02"
+VERSION ="1.5.4.03"
 """
-最后版本生成时间:  2016-10-13
+最后版本生成时间:  2016-10-26
 """
  
 LICENSE ="MIT"

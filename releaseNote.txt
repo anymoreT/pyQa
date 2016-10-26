@@ -7,4 +7,8 @@ Vesrsion1.5.4.0１:
 	1. httphandle添加response_deep_key_value_is_right等多个验证方法
 Vesrsion1.5.4.02:
 	1. 添加属性修改
-	2.添加RadioButton,FileInput基础元素	
+	2.添加RadioButton,FileInput基础元素
+Vesrsion1.5.4.03:
+	1. WebElement.get_text()添加时间间隔参数
+		
+	
