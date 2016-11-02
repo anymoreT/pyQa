@@ -140,19 +140,21 @@ class WebElement(object):
         for i in range(frequence):
             self.web_element = self.element()
             if self.web_element.is_enabled(): 
-                time.sleep(int(interval))
+                if interval > 0:
+                    time.sleep(interval)
                 return
             time.sleep(int(interval)) 
         else:
             Log.log_error_info("fail to wait element %s enable\n" % (self.class_name))           
     
-    def get_text(self):
+    def get_text(self, time_interval = 2):
         '''
         获得元素文本
         '''
         try:
             #实际使用中发现，需要等待2秒才能稳定得到文本
-            time.sleep(2) 
+            if time_interval > 0 :
+                time.sleep(int(time_interval)) 
             return self.web_element.text 
         except:
             Log.log_error_info("fail to get text for %s\n" % (self.class_name))  
@@ -167,7 +169,8 @@ class WebElement(object):
         for i in range(frequence):
             self.web_element = self.element()
             if self.web_element is not None:
-                time.sleep(1)  
+                if interval > 0:
+                    time.sleep(int(interval))
                 return
             time.sleep(int(interval)) 
         else:
