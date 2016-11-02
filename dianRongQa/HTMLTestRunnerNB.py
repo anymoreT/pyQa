@@ -176,9 +176,9 @@ class Template_mixin(object):
     """
 
     STATUS = {
-    0: 'pass0',
-    1: 'fail1',
-    2: 'error2',
+    0: 'Pass',
+    1: 'Fail',
+    2: 'Error',
     }
 
     DEFAULT_TITLE = 'Unit Test Report'
@@ -371,6 +371,9 @@ a.popup_link:hover {
 .test-steps {
     width: 40%
 }
+.test-cases {
+    width: 20%
+}
 #result_table 
 #header_row {
     font-weight: bold;
@@ -439,7 +442,7 @@ a.popup_link:hover {
 <col align='right' />
 </colgroup>
 <tr id='header_row'>
-    <td>Test Group/Test case</td>
+    <td class='test-cases'>Test Group/Test case</td>
     <td>Count</td>
     <td>Pass</td>
     <td>Fail</td>
@@ -468,6 +471,7 @@ a.popup_link:hover {
     <td>%(fail)s</td>
     <td>%(error)s</td>
     <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">Detail</a></td>
+    <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">查看测试步骤</a></td>
 </tr>
 """ # variables: (style, desc, count, Pass, fail, error, cid)
 
