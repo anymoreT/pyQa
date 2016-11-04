@@ -65,6 +65,7 @@ class WebElement(object):
             else:    
                 self.clear()
                 self.web_element.send_keys(str)
+            Log.log_step("向元素输入文本：%s.(元素位置：%s)"%(str, self.locator))
         except:
             Log.log_error_info("Couldn't input %s for %s\n" % (str, self.class_name))
     
@@ -74,6 +75,7 @@ class WebElement(object):
         '''
         try:
             self.web_element.clear()
+            Log.log_step("清空元素文本.(元素位置：%s)"%(self.locator))
         except:
             Log.log_error_info("Couldn't clear %s\n" % (self.class_name))
             
@@ -88,6 +90,7 @@ class WebElement(object):
                 self.driver.execute_script("arguments[0].click()", self.get_element())
             else:    
                 self.web_element.click()
+            Log.log_step("点击元素.(元素位置：%s)"%(self.locator))    
         except:
             Log.log_error_info("fail to  click %s\n" % (self.class_name))
 
@@ -97,6 +100,7 @@ class WebElement(object):
         '''
         try:
             self.web_element.send_keys(Keys.TAB)
+            Log.log_step("元素上按TAB键.(元素位置：%s)"%(self.locator))
         except:
             Log.log_error_info("fail to  send tab key for %s\n" % (self.class_name))   
      
@@ -106,6 +110,7 @@ class WebElement(object):
         '''
         try:
             self.web_element.send_keys(Keys.ENTER)
+            Log.log_step("元素上按ENTER键.(元素位置：%s)"%(self.locator))
         except:
             Log.log_error_info("fail to  send tab key for %s\n" % (self.class_name))         
     
@@ -114,6 +119,7 @@ class WebElement(object):
         元素存在，返回真；元素存在，返回假
         '''
         try:
+            Log.log_step("返回元素是否存在标示.(元素位置：%s)"%(self.locator))
             return self.web_element.is_displayed()
         except:
             return False 
@@ -124,14 +130,16 @@ class WebElement(object):
         '''
         if self.get_element().is_enabled():
             Log.log_error_info("%s should not be enable\n" % (self.class_name))   
- 
+        Log.log_step("通过判断，元素不可用.(元素位置：%s)"%(self.locator))
+        
     def should_enable(self):
         '''
         判断元素是可用
         '''
         if not self.get_element().is_enabled():
             Log.log_error_info("%s should be enable\n" % (self.class_name))   
-    
+        Log.log_step("通过判断，元素可用.(元素位置：%s)"%(self.locator))
+        
     def wait_element_enable(self, timeout =  30, interval = 2):
         '''
         等待元素变成可用
@@ -146,7 +154,8 @@ class WebElement(object):
             time.sleep(int(interval)) 
         else:
             Log.log_error_info("fail to wait element %s enable\n" % (self.class_name))           
-    
+        Log.log_step("等待元素出现.(元素位置：%s)"%(self.locator))
+         
     def get_text(self, time_interval = 2):
         '''
         获得元素文本
@@ -155,6 +164,7 @@ class WebElement(object):
             #实际使用中发现，需要等待2秒才能稳定得到文本
             if time_interval > 0 :
                 time.sleep(int(time_interval)) 
+            Log.log_step("获取元素文本.(元素位置：%s)"%(self.locator))    
             return self.web_element.text 
         except:
             Log.log_error_info("fail to get text for %s\n" % (self.class_name))  
@@ -175,6 +185,7 @@ class WebElement(object):
             time.sleep(int(interval)) 
         else:
             Log.log_error_info("fail to wait element %s present.locator is %s\n" % (self.class_name,self.locator))  
+        Log.log_step("等待元素出现.(元素位置：%s)"%(self.locator))
     
     def should_exist(self):
         '''
@@ -186,20 +197,22 @@ class WebElement(object):
                 Log.log_error_info("%s is not existed\n" % (self.class_name))   
         except:
             Log.log_error_info("%s is has not display method\n" % (self.class_name))   
-
-
+        Log.log_step("通过判断，元素存在.(元素位置：%s)"%(self.locator))
+         
     def should_not_exist(self):
         '''
         判断元素不存在
         '''
         element = self.element()
         if element is None:
+            Log.log_step("通过判断，元素不存在.(元素位置：%s)"%(self.locator))
             return True
         else:
             is_displayed = element.is_displayed()
             if is_displayed:
                 Log.log_error_info("%s is existed\n" % (self.class_name))   
             else:
+                Log.log_step("通过判断，元素不存在.(元素位置：%s)"%(self.locator))
                 return True
 
     def should_include_text(self, include_text):   
@@ -210,7 +223,7 @@ class WebElement(object):
         index = text.find(include_text)
         if -1 == index:
             Log.log_error_info("%s  is not include %s, the real text is %s\n" % (self.class_name, include_text, text))   
-       
+        Log.log_step("通过判断，元素包含文本:%s.(元素位置：%s)"%(include_text,self.locator))
                   
     def should_not_include_text(self, include_text):
         '''
@@ -220,7 +233,8 @@ class WebElement(object):
         index = text.find(include_text)
         if -1 != index:
             Log.log_error_info("%s include %s, the real text is %s\n" % (self.class_name, include_text, text)) 
-    
+        Log.log_step("通过判断，元素不包含文本:%s.(元素位置：%s)"%(include_text,self.locator))
+        
     def should_equal_text(self, expected_text):   
         '''
         判断字符串等于指定的字符串
@@ -228,14 +242,16 @@ class WebElement(object):
         text = self.get_text()
         if text != expected_text:
             Log.log_error_info("%s  is not equal  %s, the real text is %s\n" % (expected_text, text, self.class_name))   
+        Log.log_step("通过判断，元素等于文本:%s.(元素位置：%s)"%(expected_text,self.locator)) 
          
-    def mouse_over(self):
+    def mouse_over(self, interval_time =2):
         '''
         模拟鼠标放到元素上面
         '''
         self.action.move_to_element(self.get_element())   
         self.action.perform()  
-        time.sleep(2)             
+        time.sleep(interval_time)             
+        Log.log_step("鼠标放在元素上.(元素位置：%s)"%(self.locator))
         
     def wait_element_disappear(self, timeout =  30, interval = 2):
         '''
@@ -250,10 +266,12 @@ class WebElement(object):
             time.sleep(int(interval)) 
         else:
             Log.log_error_info("fail to wait element %s present.locator is %s\n" % (self.class_name,self.locator))  
+        Log.log_step("等待元素消失．(元素位置：%s)"%(self.locator))
      
     def set_attribute(self, attribute, vaule):
         '''
         设置属性
         '''
         el = self.element()       
-        self.driver.execute_script("arguments[0].setAttribute('%s' ,'%s)"%(attribute, vaule), el)                
+        self.driver.execute_script("arguments[0].setAttribute('%s' ,'%s)"%(attribute, vaule), el)
+        Log.log_step("设置元素属性%s=%s.(元素位置：%s)"%(attribute,vaule,self.locator))             

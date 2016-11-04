@@ -65,6 +65,7 @@ class HttpHandle(TestCase):
         self.http_payload  = data
         self.http_request = url
         self.http_response = self.http_hander.post(self.http_request, data = self.http_payload,**kwargs) 
+        Log.log_step("发送post请求，请求是:%s"%(url))     
         return self.http_response
     
     #发送post请求，带json格式数据
@@ -94,6 +95,7 @@ class HttpHandle(TestCase):
         发送get请求
         '''
         self.http_response = self.http_hander.get(url, **kwargs)
+        Log.log_step("发送get请求，请求是:%s"%(url))   
         return self.http_response
    
     #设置header　 

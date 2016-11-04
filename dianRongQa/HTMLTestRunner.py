@@ -98,6 +98,9 @@ import time
 import unittest
 from xml.sax import saxutils
 
+import re
+import pdb
+
 
 # ------------------------------------------------------------------------
 # The redirectors below are used to capture output during testing. Output
@@ -173,9 +176,9 @@ class Template_mixin(object):
     """
 
     STATUS = {
-    0: 'pass',
-    1: 'fail',
-    2: 'error',
+    0: 'Pass',
+    1: 'Fail',
+    2: 'Error',
     }
 
     DEFAULT_TITLE = 'Unit Test Report'
@@ -309,12 +312,12 @@ function showOutput(id, name) {
 <style type="text/css" media="screen">
 body        { font-family: verdana, arial, helvetica, sans-serif; font-size: 80%; }
 table       { font-size: 100%; }
-pre         { }
+pre         {   word-wrap:break-word;word-break:break-all;overflow:auto;}
 
 /* -- heading ---------------------------------------------------------------------- */
 h1 {
-	font-size: 16pt;
-	color: gray;
+    font-size: 16pt;
+    color: gray;
 }
 .heading {
     margin-top: 0ex;
@@ -360,10 +363,18 @@ a.popup_link:hover {
     margin-bottom: 1ex;
 }
 #result_table {
-    width: 80%;
+    width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
     border: 1px solid #777;
 }
+.test-steps {
+    width: 40%
+}
+.test-cases {
+    width: 20%
+}
+#result_table 
 #header_row {
     font-weight: bold;
     color: white;
@@ -428,14 +439,16 @@ a.popup_link:hover {
 <col align='right' />
 <col align='right' />
 <col align='right' />
+<col align='right' />
 </colgroup>
 <tr id='header_row'>
-    <td>Test Group/Test case</td>
+    <td class='test-cases'>Test Group/Test case</td>
     <td>Count</td>
     <td>Pass</td>
     <td>Fail</td>
     <td>Error</td>
     <td>View</td>
+    <td class='test-steps'>测试步骤</td>
 </tr>
 %(test_list)s
 <tr id='total_row'>
@@ -445,6 +458,7 @@ a.popup_link:hover {
     <td>%(fail)s</td>
     <td>%(error)s</td>
     <td>&nbsp;</td>
+    <td>%(html)s</td>
 </tr>
 </table>
 """ # variables: (test_list, count, Pass, fail, error)
@@ -457,6 +471,7 @@ a.popup_link:hover {
     <td>%(fail)s</td>
     <td>%(error)s</td>
     <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">Detail</a></td>
+    <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">查看测试步骤</a></td>
 </tr>
 """ # variables: (style, desc, count, Pass, fail, error, cid)
 
@@ -480,8 +495,9 @@ a.popup_link:hover {
         </pre>
     </div>
     <!--css div popup end-->
-
+    
     </td>
+    <td>%(html)s</td>
 </tr>
 """ # variables: (tid, Class, style, desc, status)
 
@@ -627,10 +643,12 @@ class HTMLTestRunner(Template_mixin):
     def run(self, test):
         "Run the given test case or test suite."
         result = _TestResult(self.verbosity)
+   
         test(result)
         self.stopTime = datetime.datetime.now()
         self.generateReport(test, result)
         #print >>sys.stderr, '\nTime Elapsed: %s' % (self.stopTime-self.startTime)
+
         print (sys.stderr, '\nTime Elapsed: %s' % (self.stopTime-self.startTime))
         return result
 
@@ -750,6 +768,7 @@ class HTMLTestRunner(Template_mixin):
             Pass = str(result.success_count),
             fail = str(result.failure_count),
             error = str(result.error_count),
+            html = "测试步骤细节"
         )
         return report
 
@@ -762,42 +781,50 @@ class HTMLTestRunner(Template_mixin):
         doc = t.shortDescription() or ""
         desc = doc and ('%s: %s' % (name, doc)) or name
         tmpl = has_output and self.REPORT_TEST_WITH_OUTPUT_TMPL or self.REPORT_TEST_NO_OUTPUT_TMPL
-
         # o and e should be byte string because they are collected from stdout and stderr?
         if isinstance(o,str):
             # TODO: some problem with 'string_escape': it escape \n and mess up formating
             # uo = unicode(o.encode('string_escape'))
             #uo = o.decode('latin-1')
-		#	uo = o.decode('utf-8')
-                uo = e
+        #    uo = o.decode('utf-8')
+            uo =  o
         else:
-            uo = o
+            uo = e
         if isinstance(e,str):
             # TODO: some problem with 'string_escape': it escape \n and mess up formating
             # ue = unicode(e.encode('string_escape'))
             #ue = e.decode('latin-1')
-			#ue = e.decode('utf-8')
-            ue = e
+            #ue = e.decode('utf-8')
+            ue = e 
         else:
-            ue = e
+            ue = o
+        html = uo + ue
 
         script = self.REPORT_TEST_OUTPUT_TMPL % dict(
             id = tid,
             output = saxutils.escape(uo+ue),
         )
-
+        steps_list = self._parse_steps(html)
+        html = ""
+        for step in steps_list:
+            html += "<span style='color:blue'>" + step + "</span><br/>"
         row = tmpl % dict(
             tid = tid,
             Class = (n == 0 and 'hiddenRow' or 'none'),
             style = n == 2 and 'errorCase' or (n == 1 and 'failCase' or 'none'),
             desc = desc,
             script = script,
+            html = html,
             status = self.STATUS[n],
         )
         rows.append(row)
         if not has_output:
             return
-
+    
+    def _parse_steps(self, steps):
+        pattern = re.compile("<STEP_BEGIN>(.*?)<STEP_END>",re.MULTILINE|re.IGNORECASE|re.DOTALL)
+        return  re.findall( pattern,steps)
+    
     def _generate_ending(self):
         return self.ENDING_TMPL
 
