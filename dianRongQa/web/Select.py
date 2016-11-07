@@ -17,7 +17,7 @@ class SelectElement(WebElement):
             return self.select_instance.options()   
         except:
             Log.log_error_info("Couldn't get option %s \n")
-   
+         
     def get_selected_option(self):
         '''
         获得当前选中的条目
@@ -35,6 +35,7 @@ class SelectElement(WebElement):
         selected_option =  self.get_selected_option().text.strip()
         if option != selected_option:
             Log.log_error_info("selected option  is %s, not %s \n"%(selected_option, option))
+        Log.log_step("下拉框元素当前选中为: %s．(元素位置：%s)"%(option, self.locator))
           
     def select_by_value(self, value):
         '''
@@ -45,6 +46,7 @@ class SelectElement(WebElement):
             self.select_instance.select_by_value(value)
         except:
             Log.log_error_info("Couldn't select option %s \n" % (value))
+        Log.log_step("下拉框元素选中: %s．(元素位置：%s)"%(value, self.locator))
 
                 
     def select_by_index(self,index =  1):
@@ -53,10 +55,12 @@ class SelectElement(WebElement):
         '''
         self.bind()
         self.select_instance.select_by_index(index) 
-        
+        Log.log_step("下拉框元素选中位置为%d的选项．(元素位置：%s)"%(index, self.locator))
+         
     def select_by_option(self,option):
         '''
         选中指定的文本项目
         '''
         self.bind()
         self.select_instance.select_by_visible_text(option)  
+        Log.log_step("下拉框元素选中: %s．(元素位置：%s)"%(option, self.locator))

@@ -16,3 +16,13 @@ class Log(object):
     def log_info(info):
         timestamp = time.strftime("%Y-%m-%d %H:%M:%S:")    
         print(timestamp + info + "\n")
+      
+    #记录日志到report里面  
+    @staticmethod   
+    def log_step(step_info):
+        print(sys.stdout,"<STEP_BEGIN>%s<STEP_END>"%(step_info))    
+        
+    #记录日志到case里面  
+    @staticmethod   
+    def log_case_desc(step_info):
+        print(sys.stdout,"<CONTENT_BEGIN>%s<CONTENT_END>"%(step_info))

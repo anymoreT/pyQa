@@ -15,9 +15,11 @@ class CheckBoxElement(WebElement):
             self.click()  
         if self.is_selected():
             Log.log_error_info("couldn't make %s un-select"%(self.class_name))  
+        Log.log_step("不选中复选框元素．(元素位置：%s)"%(self.locator))   
             
     def make_selected(self): 
         if not self.is_selected():
             self.click()  
         if not self.is_selected():
-            Log.log_error_info("couldn't make %s select"%(self.class_name))             
+            Log.log_error_info("couldn't make %s select"%(self.class_name))  
+        Log.log_step("不选中复选框元素．(元素位置：%s)"%(self.locator))             
