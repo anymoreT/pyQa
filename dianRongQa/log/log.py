@@ -25,4 +25,4 @@ class Log(object):
     #记录日志到case里面  
     @staticmethod   
     def log_case_desc(step_info):
-        print(sys.stdout,"<CONTENT_BEGIN>%s<CONTENT_END>"%(step_info))
+        print(sys.stdout,"<DESC_BEGIN>%s<DESC_END>"%(step_info))

@@ -369,7 +369,7 @@ a.popup_link:hover {
     border: 1px solid #777;
 }
 .test-steps {
-    width: 40%
+    width: 30%
 }
 .test-cases {
     width: 20%
@@ -440,6 +440,7 @@ a.popup_link:hover {
 <col align='right' />
 <col align='right' />
 <col align='right' />
+<col align='right' />
 </colgroup>
 <tr id='header_row'>
     <td class='test-cases'>Test Group/Test case</td>
@@ -448,7 +449,9 @@ a.popup_link:hover {
     <td>Fail</td>
     <td>Error</td>
     <td>View</td>
+    <td class='test-steps'>测试内容</td>
     <td class='test-steps'>测试步骤</td>
+
 </tr>
 %(test_list)s
 <tr id='total_row'>
@@ -458,6 +461,7 @@ a.popup_link:hover {
     <td>%(fail)s</td>
     <td>%(error)s</td>
     <td>&nbsp;</td>
+    <td>%(test_desc)s</td>
     <td>%(html)s</td>
 </tr>
 </table>
@@ -471,6 +475,7 @@ a.popup_link:hover {
     <td>%(fail)s</td>
     <td>%(error)s</td>
     <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">Detail</a></td>
+    <td>%(test_desc)s</td>
     <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">查看测试步骤</a></td>
 </tr>
 """ # variables: (style, desc, count, Pass, fail, error, cid)
@@ -497,6 +502,7 @@ a.popup_link:hover {
     <!--css div popup end-->
     
     </td>
+    <td>%(test_desc)s</td>
     <td>%(html)s</td>
 </tr>
 """ # variables: (tid, Class, style, desc, status)
@@ -747,7 +753,7 @@ class HTMLTestRunnerNB(Template_mixin):
                 name = "%s.%s" % (cls.__module__, cls.__name__)
             doc = cls.__doc__ and cls.__doc__.split("\n")[0] or ""
             desc = doc and '%s: %s' % (name, doc) or name
-
+            test_desc = ""
             row = self.REPORT_CLASS_TMPL % dict(
                 style = ne > 0 and 'errorClass' or nf > 0 and 'failClass' or 'passClass',
                 desc = desc,
@@ -755,6 +761,7 @@ class HTMLTestRunnerNB(Template_mixin):
                 Pass = np,
                 fail = nf,
                 error = ne,
+                test_desc=test_desc,
                 cid = 'c%s' % (cid+1),
             )
             rows.append(row)
@@ -768,7 +775,8 @@ class HTMLTestRunnerNB(Template_mixin):
             Pass = str(result.success_count),
             fail = str(result.failure_count),
             error = str(result.error_count),
-            html = "测试步骤细节"
+            test_desc = "",
+            html = ""
         )
         return report
 
@@ -798,14 +806,17 @@ class HTMLTestRunnerNB(Template_mixin):
             ue = e 
         else:
             ue = o
-        html = uo + ue
+        result_log = uo + ue
 
         script = self.REPORT_TEST_OUTPUT_TMPL % dict(
             id = tid,
             output = saxutils.escape(uo+ue),
         )
-        steps_list = self._parse_steps(html)
+        steps_list = self._parse_steps(result_log)
+
         html = ""
+        test_desc = self._parse_test_desc(result_log)
+   
         for step in steps_list:
             html += "<span style='color:blue'>" + step + "</span><br/>"
         row = tmpl % dict(
@@ -815,6 +826,7 @@ class HTMLTestRunnerNB(Template_mixin):
             desc = desc,
             script = script,
             html = html,
+            test_desc = test_desc,
             status = self.STATUS[n],
         )
         rows.append(row)
@@ -824,6 +836,15 @@ class HTMLTestRunnerNB(Template_mixin):
     def _parse_steps(self, steps):
         pattern = re.compile("<STEP_BEGIN>(.*?)<STEP_END>",re.MULTILINE|re.IGNORECASE|re.DOTALL)
         return  re.findall( pattern,steps)
+    
+    def _parse_test_desc(self, test_desc):
+        pattern = re.compile("<DESC_BEGIN>(.*?)<DESC_END>",re.MULTILINE|re.IGNORECASE|re.DOTALL)
+        result_list = re.findall( pattern,test_desc)
+        if len(result_list) == 0:
+            return ""
+        else:
+            return result_list[0]
+             
     
     def _generate_ending(self):
         return self.ENDING_TMPL

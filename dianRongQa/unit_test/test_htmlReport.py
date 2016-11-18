@@ -17,6 +17,6 @@ class ReportTest(unittest.TestCase):
         
         
     def test_report1(self):
-        Log.log_case_desc("TC002:这个case是生产报告")
+        Log.log_case_desc("TC002:/api/test/case/10001:8080/news")
         print(sys.stdout,"<STEP_BEGIN>%s<STEP_END>"%("等待元素:(xpath: //div/html/div[1]/a[contains(text(),'点击上传')]//a['登陆'])"))
  

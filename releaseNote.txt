@@ -1,14 +1,22 @@
 Version1.5.3:
 	1. do_no_query_action执行后，添加commit操作，确认执行
 	2. 修改httphandle发送json方法
+	
 Vesrsion1.5.4.00:
 	1. httphandle集成unittest.TestCase类，用于集成各种assert方法
+	
 Vesrsion1.5.4.0１:
 	1. httphandle添加response_deep_key_value_is_right等多个验证方法
+	
 Vesrsion1.5.4.02:
 	1. 添加属性修改
 	2.添加RadioButton,FileInput基础元素
+	
 Vesrsion1.5.4.03:
 	1. WebElement.get_text()添加时间间隔参数
+	
+Vesrsion1.5.5.1:
+	1. 修改htmlRunner,生成可以添加测试描述的报告	
+	
 		
 	
