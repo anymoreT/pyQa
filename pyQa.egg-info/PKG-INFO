@@ -1,0 +1,15 @@
+Metadata-Version: 1.1
+Name: pyQa
+Version: 1.5.6
+Summary: this is a test package for packing python liberaries tutorial.
+Home-page: UNKNOWN
+Author: 黄勇
+Author-email: 249773304@qq.com
+License: MIT
+Description: 本版本用于验证测试ＵＩ和api接口
+Keywords: pyQa
+Platform: UNKNOWN
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent

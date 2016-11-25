@@ -22,13 +22,13 @@ def read(fname):
  
  
  
-NAME ="dianRongQa"
+NAME ="pyQa"
 """
 名字，一般放你包的名字即可
 """
  
-PACKAGES =["dianRongQa","dianRongQa/database","dianRongQa/global_list","dianRongQa/httpHander","dianRongQa/log","dianRongQa/utils","dianRongQa/web",
-                     "dianRongQa/unit_test"]
+PACKAGES =["pyQa","pyQa/database","pyQa/global_list","pyQa/httpHander","pyQa/log","pyQa/utils","pyQa/web",
+                     "pyQa/unit_test"]
 """
 包含的包，可以多个，这是一个列表
 """
@@ -45,7 +45,7 @@ LONG_DESCRIPTION ="本版本用于验证测试ＵＩ和api接口"
 参见read方法说明
 """
  
-KEYWORDS ="pyOpenQa"
+KEYWORDS ="pyQa"
 """
 关于当前包的一些关键字，方便PyPI进行分类。
 """

@@ -2,9 +2,9 @@
 from unittest import TestSuite,TestLoader
 import sys
 import os
-import dianRongQa
+#import pyQa
 print(os.getcwd())
-from dianRongQa.HTMLTestRunnerNB import  HTMLTestRunnerNB
+from pyQa.HTMLTestRunnerNB import  HTMLTestRunnerNB
 
 
 
@@ -12,7 +12,7 @@ from dianRongQa.HTMLTestRunnerNB import  HTMLTestRunnerNB
  
 def run_all_cases():
     current_dir = os.path.dirname(__file__)
-    testSuit_path = os.path.join(current_dir, "dianRongQa", "unit_test")
+    testSuit_path = os.path.join(current_dir, "pyQa", "unit_test")
     all_suits = TestLoader().discover(testSuit_path)
     run_suit(all_suits)
   
