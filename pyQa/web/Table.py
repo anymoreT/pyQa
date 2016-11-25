@@ -2,7 +2,7 @@
 
 from .webElement import *
 import pdb
-from dianRongQa.log.log import Log
+from pyQa.log.log import Log
 import time
 from curses.ascii import NUL
 

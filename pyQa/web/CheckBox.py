@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-from dianRongQa.web.webElement import WebElement
-from dianRongQa.log.log import Log
+from pyQa.web.webElement import WebElement
+from pyQa.log.log import Log
 
 class CheckBoxElement(WebElement):
     def __init__(self, element_type, locator):

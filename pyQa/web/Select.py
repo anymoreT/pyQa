@@ -1,6 +1,6 @@
 from .webElement import *
 from selenium.webdriver.support.select import Select
-from dianRongQa.log.log import Log
+from pyQa.log.log import Log
 
 class SelectElement(WebElement):
     def __init__(self, element_type, locator):
