@@ -10,10 +10,10 @@ python setup.py check
 python setup.py sdist
 
 安装包：
-sudo pip install dianRongQa-x.x.x.tar.gz
+sudo pip install pyQa-x.x.x.tar.gz
 
 卸载包：
-sudo pip uninstall dianRongQa
+sudo pip uninstall pyQa
 
 
 cx_Oracle安装：
