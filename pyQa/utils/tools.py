@@ -41,7 +41,7 @@ class Tools(object):
 
     @staticmethod
     def get_random_email():
-        email_suffix = ["@qq.com",'@163.com','@gmail.com','@sina.com','@sohu.com','@china.com','@163.com','@126.com','@dianrong.com']
+        email_suffix = ["@qq.com",'@163.com','@gmail.com','@sina.com','@sohu.com','@china.com','@163.com','@126.com']
         random_index = random.randrange(len(email_suffix))-1
         email =   time.strftime("%m%d%H%S") + email_suffix[random_index]
         return email
