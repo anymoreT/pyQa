@@ -4,6 +4,7 @@ from os import path
 
 class Global_factory(object):
     Driver = None
+    ErrorCount = 0
     
     #得到驱动
     @staticmethod    
@@ -16,3 +17,14 @@ class Global_factory(object):
     @staticmethod  
     def set_driver(driver): 
         Global_factory.Driver = driver
+
+    #增加error统计
+    @staticmethod
+    def add_error_count():
+        Global_factory.ErrorCount += 1
+
+        # 增加error统计
+
+    @staticmethod
+    def get_error_count():
+        return Global_factory.ErrorCount

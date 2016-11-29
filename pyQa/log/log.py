@@ -1,13 +1,15 @@
 # -*- coding:utf-8 -*-
 import sys
 import time
+from pyQa.global_list.global_var import  Global_factory
 
 
 class Log(object):
-    #打印错误日志，抛出异常
+    #打印错误日志，抛出异常,增加异常计数
     @staticmethod
     def log_error_info(info):
         timestamp = time.strftime("%Y-%m-%d %H:%M:%S:")
+        Global_factory.add_error_count()
         sys.stdout.write(timestamp + info + "\n")
         raise Exception("Assert error:", info)
   

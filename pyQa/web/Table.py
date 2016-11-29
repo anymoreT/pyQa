@@ -4,7 +4,7 @@ from .webElement import *
 import pdb
 from pyQa.log.log import Log
 import time
-from curses.ascii import NUL
+
 
 class TableElement(WebElement):
     def __init__(self, element_type, locator):
@@ -21,7 +21,7 @@ class TableElement(WebElement):
    #判断表格中某一行列的文本不为空
     def row_column_text_should_not_null(self, row, column):    
         cell_text = self.__find_element_by_row_column(row, column).text
-        if cell_text is not NUL:
+        if cell_text is not None:
             return True
         else:
             Log.log_error_info("未根据自动分配规则分配任务给电销")
@@ -53,10 +53,17 @@ class TableElement(WebElement):
 
   
     def __find_element_by_row_column(self, row = 1, column = 1):
-        return self.element().find_element_by_xpath(".//tbody//tr[%d]//td[%d]" % (row, column ))
+         try: 
+            return self.element().find_element_by_xpath(".//tbody//tr[%d]//td[%d]" % (row, column ))
+         except:
+            return None
+
     
     def __find_element_by_row(self, row = 1):
-        return self.element().find_element_by_xpath(".//tbody//tr[%d]" % (row))
+         try: 
+            return self.element().find_element_by_xpath(".//tbody//tr[%d]" % (row))
+         except:
+            return None   
               
     def row_text_should_include(self,row, include_text):    
         cell_text = self.__find_element_by_row(row).text
