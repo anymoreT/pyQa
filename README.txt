@@ -1,22 +1,20 @@
-该包是一个共用基础测试包．
+该包是一个共用基础测试包,支持python3.4+．
 主要功能：
 １．支持web测试
 ２．支持接口测试
 
-
+============打包，安装包=============
 查看包文件：
 python setup.py check
 打包命令：
 python setup.py sdist
-
 安装包：
 sudo pip install pyQa-x.x.x.tar.gz
-
 卸载包：
 sudo pip uninstall pyQa
 
-
-cx_Oracle安装：
+=========支持oracle数据库==================
+cx_Oracle安装：(ubuntu)
 该报需要支持oracel的操作
 １．安装dpk
 apt-get isntall  oracle-instantclient12.1-basic_12.1.0.2.0-1_amd64.deb
@@ -43,7 +41,7 @@ export NLS_LANG=AMERICAN_AMERICA.AL32UTF8
 pip install cx-Oracle
 
 
-文档生成
+==================文档生成=====================
 １．　pip install Sphinx
 2.  进入项目目录，运行　sphinx-quickstart
 
@@ -55,7 +53,6 @@ rm *.rst
 ４．sphinx-apidoc -o . ..
 ５．make html
 
-=======
 注意：auto insert dostring哪一个选项要选择 y，文档目录填　doc
 3. 进入doc目录，找到conf.py目录，添加
 　import sys
