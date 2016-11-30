@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from pyQa.web.webElement import *
+from pyQa.web.WebElement import *
 import pdb
 class FileTextInputElement(WebElement):
     def __init__(self, element_type, locator):

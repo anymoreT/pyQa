@@ -9,6 +9,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.remote.webelement import WebElement as SeleniumWebElement
 import time
 import pdb
+
 class WebElement(object):
     def __init__(self, element_type, locator):
         '''

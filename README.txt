@@ -1,7 +1,20 @@
 该包是一个共用基础测试包,支持python3.4+．
 主要功能：
-１．支持web测试
-２．支持接口测试
+1．支持web测试
+2．支持接口测试
+3. 支持mysql,oracle操作
+
+=================安装步骤=====================
+1. 安装python3.4+;
+2. 安装pip
+3.安装cx-Oracle（windonw,linux安装有些复杂，请在网上所搜下指导）
+4. pip install -r requirements.txt(安装本包依赖的其他包)
+5. 在dist里安装本包的最新或者自己生产包，再安装
+
+========使用===============================
+下载本包的示例项目，根据自己的项目进行裁剪:
+github地址：https://github.com/benhuangyong/demoProject
+
 
 ============打包，安装包=============
 查看包文件：
@@ -60,3 +73,6 @@ sys.path.insert(0, '..')
 ４．sphinx-apidoc -o . ..
 ５．make html
 
+
+作者联系方式：
+249773304@qq.com

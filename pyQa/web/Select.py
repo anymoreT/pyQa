@@ -1,4 +1,4 @@
-from .webElement import *
+from .WebElement import *
 from selenium.webdriver.support.select import Select
 from pyQa.log.log import Log
 

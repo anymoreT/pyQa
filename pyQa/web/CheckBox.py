@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from pyQa.web.webElement import WebElement
+from pyQa.web.WebElement import WebElement
 from pyQa.log.log import Log
 
 class CheckBoxElement(WebElement):

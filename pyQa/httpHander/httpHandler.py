@@ -76,7 +76,8 @@ class HttpHandle(TestCase):
         '''
         self.http_payload  = json
         self.http_request = url
-        self.http_response = self.http_hander.post(self.http_request, json = self.http_payload, **kwargs) 
+        self.http_response = self.http_hander.post(self.http_request, json = self.http_payload, **kwargs)
+        Log.log_step("发送post请求，请求是:%s" % (url))
         return self.http_response
     
     #发送post请求，带json格式字符串数据
@@ -86,9 +87,10 @@ class HttpHandle(TestCase):
         '''
         self.http_payload  =  json.loads(playload)
         self.http_request = url
-        self.http_response = self.http_hander.post(self.http_request, json = self.http_payload, **kwargs) 
+        self.http_response = self.http_hander.post(self.http_request, json = self.http_payload, **kwargs)
+        Log.log_step("发送post请求，请求是:%s" % (url))
         return self.http_response
-    
+
     #get 请求
     def do_get(self, url, **kwargs):
         '''
@@ -170,8 +172,8 @@ class HttpHandle(TestCase):
         
     #将响应内容转换成python结构 
     def  conver_response_body_to_struct(self):
-        #去除null,用None代替null,否则eval 不能处理
         '''
+        #去除null,用None代替null,否则eval 不能处理
         将响应文本结果，转换成python的数据格式
         注意：如果返回的结果是null,这转换后用None代替；如果结果是true,那么会变成True
         '''
@@ -213,10 +215,11 @@ class HttpHandle(TestCase):
         判断响应的状态码是否是指定的状态码，不是就报错
         '''
         if status_code != self.get_response_status_code():
-            Log.log_error_info("status  code should be %d, but the  real value is %d"%(status_code,self.get_response_status_code()))
+            Log.log_error_info("status code should be %d, but the  real value is %d"%(status_code,self.get_response_status_code()))
         else:
-            Log.log_info("Verify..., status code is ok.")    
-         
+            Log.log_info("Verify..., status code is ok.")
+        Log.log_step("检查状态码是:%d" % (status_code))
+
     #检查响应文本是一个list格式     
     def response_body_should_be_list_struct(self):   
         '''
@@ -225,7 +228,9 @@ class HttpHandle(TestCase):
         if not isinstance(self.conver_response_body_to_struct(),  HttpHandle.TYPES['LIST']):
             Log.log_error_info("status code should be list")
         else:
-            Log.log_info("Verify..., response struct is ok.")    
+            Log.log_info("Verify..., response struct is ok.")
+        Log.log_step("检查响应是list结构")
+
     
     #检查响应文本是一个dict格式  
     def response_body_should_be_dictionary_struct(self):   
@@ -235,7 +240,8 @@ class HttpHandle(TestCase):
         if not isinstance(self.conver_response_body_to_struct(), HttpHandle.TYPES['HASH']):
             Log.log_error_info("Verify..., response struct is not dictionary.")
         else:    
-            Log.log_info("Verify..., response struct is ok.")  
+            Log.log_info("Verify..., response struct is ok.")
+        Log.log_step("检查响应是HASH结构")
     
     #只能比对第一层的dic
     #检查响应里面有指定字段
@@ -247,7 +253,8 @@ class HttpHandle(TestCase):
         if key not in dic:
             Log.log_error_info("Verify..., response key has no key: %s"%(key))
         else:
-            Log.log_info("Verify..., response key is ok.")  
+            Log.log_info("Verify..., response key is ok.")
+        Log.log_step("检查响应含有字段:%s"%(key))
             
     #只能比对第一层的dic
     #检查响应里面有指定字段
@@ -259,7 +266,8 @@ class HttpHandle(TestCase):
         if key  in dic:
             Log.log_error_info("Verify..., response key has  key: %s"%(key))
         else:
-            Log.log_info("Verify...,ok, response has not key..")  
+            Log.log_info("Verify...,ok, response has not key..")
+        Log.log_step("检查响应不含有字段:%s" % (key))
                         
     #只能比对第一层的dic
      #检查响应里面有指定的list里面的字段
@@ -272,8 +280,9 @@ class HttpHandle(TestCase):
             if key not in dic:
                 Log.log_error_info("Verify..., response key has no key: %s"%(key))
         else:
-            Log.log_info("Verify..., response keys is ok.")     
-            
+            Log.log_info("Verify..., response keys is ok.")
+        Log.log_step("检查响应含有这些字段:%s" % (key_list))
+
     #只能比对第一层的dic
      #检查响应里面有指定的list里面的字段
     def  response_dictionary_should_have_not_keys(self, key_list = []): 
@@ -285,7 +294,8 @@ class HttpHandle(TestCase):
             if key  in dic:
                 Log.log_error_info("Verify..., response key has  key: %s"%(key))
         else:
-            Log.log_info("Verify..., ok, response has not keys .")                 
+            Log.log_info("Verify..., ok, response has not keys .")
+        Log.log_step("检查响应不含有这些字段:%s" % (key_list))
    
     #只能比对第一层的dic
     #检查响应里面有指定字段和内容
@@ -297,8 +307,8 @@ class HttpHandle(TestCase):
         if dic.get(key) != value:
             Log.log_error_info("Verify..., the response dictionary  value is %s, not %s"%(dic.get(key), value))
         else:
-            Log.log_info("Verify..., response key,value is ok.")     
-   
+            Log.log_info("Verify..., response key,value is ok.")
+        Log.log_step("检查响应含有字段:%s,值为%s" % (key,value))
    
     #将response看出一串字符串  
     #响应文本包含指定的字符串
@@ -309,8 +319,8 @@ class HttpHandle(TestCase):
         if sub_string not in self.get_response_body():
             Log.log_error_info("Verify..., response string does no  inclue string: %s, real response is: %s"%(sub_string, self.get_response_body()))
         else:
-            Log.log_info("Verify..., response content is ok.")  
-   
+            Log.log_info("Verify..., response content is ok.")
+        Log.log_step("检查响应含有字符串:%s" % ( sub_string))
    
      #将response看出一串字符串  
     #响应文本不包含指定的字符串
@@ -321,8 +331,8 @@ class HttpHandle(TestCase):
         if sub_string  in self.get_response_body():
             Log.log_error_info("Verify..., response string does   inclue string: %s, real response is: %s"%(sub_string, self.get_response_body()))
         else:
-            Log.log_info("Verify..., response content is ok.")    
-   
+            Log.log_info("Verify..., response content is ok.")
+        Log.log_step("检查响应不含有字符串:%s" % (sub_string))
      
     #可以检查检查响应的深层级字段的类型
     #kwargs: target_struct={}
@@ -345,8 +355,9 @@ class HttpHandle(TestCase):
             else:        
                 if not  isinstance(content[key], HttpHandle.TYPES[value]):
                     Log.log_error_info("Verify..., the type of key %s is not %s "%(key, value))
-        Log.log_info("Verify..., response deep key type is ok.")  
-    
+        Log.log_info("Verify..., response deep key type is ok.")
+        Log.log_step("检查响应结构符合指定格式要求" )
+
     #可以检查检查响应的深层级字段的内容
     #kwargs: target_struct={}
     #e.g response_deep_key_is_struct("content", "list", 0,  target_value = {"name" : "benhuang",  "index" : "7", "verify" : "true"})
@@ -363,5 +374,5 @@ class HttpHandle(TestCase):
         for key,value in target_struct.items():
                 if content[key] != value:
                     Log.log_error_info("Verify..., the value of key %s is not %s,it is %s "%(key, value,content[key]))
-        Log.log_info("Verify..., response deep key,value  is ok.")   
-    
+        Log.log_info("Verify..., response deep key,value  is ok.")
+        Log.log_step("检查响应结构符合指定格式要求，且内容正确")

@@ -6,7 +6,7 @@ class Global_factory(object):
     Driver = None
     ErrorCount = 0
     
-    #得到驱动
+    #获到驱动
     @staticmethod    
     def get_driver():
         if Global_factory.Driver is None:

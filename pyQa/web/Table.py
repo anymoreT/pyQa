@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from .webElement import *
+from .WebElement import *
 import pdb
 from pyQa.log.log import Log
 import time
@@ -25,7 +25,8 @@ class TableElement(WebElement):
             return True
         else:
             Log.log_error_info("未根据自动分配规则分配任务给电销")
-   
+        Log.log_step("通过判断，表的%d行第%d列不为空"%(row, column))
+
     #返回整个表文本
     def get_table_text(self):
         return self.element().text

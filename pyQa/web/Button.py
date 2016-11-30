@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from .webElement import WebElement
+from .WebElement import WebElement
 
 class ButtonElement(WebElement):
     def __init__(self, element_type, locator):

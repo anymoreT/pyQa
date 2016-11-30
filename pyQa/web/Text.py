@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from .webElement import *
+from .WebElement import *
 import pdb
 class TextElement(WebElement):
     def __init__(self, element_type, locator):

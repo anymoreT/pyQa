@@ -28,14 +28,15 @@ pyQa/web/Button.py
 pyQa/web/CheckBox.py
 pyQa/web/FileTextInput.py
 pyQa/web/Link.py
+pyQa/web/PageElement.py
 pyQa/web/RadioButton.py
 pyQa/web/Select.py
 pyQa/web/Table.py
 pyQa/web/Text.py
 pyQa/web/TextInput.py
+pyQa/web/WebElement.py
 pyQa/web/__init__.py
 pyQa/web/importAll.py
-pyQa/web/webElement.py
 pyQa/database/__init__.py
 pyQa/database/mysqlUtil.py
 pyQa/database/oracleUtil.py

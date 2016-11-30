@@ -18,5 +18,8 @@ Vesrsion1.5.4.03:
 Vesrsion1.5.5.1:
 	1. 修改htmlRunner,生成可以添加测试描述的报告	
 	
-		
+Vesrsion1.5.7:
+	1. 添加测试步骤描述
+	2.weblement支持以页面为单位，调用tuple结构体，定位元素
+
 	
