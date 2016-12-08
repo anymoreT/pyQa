@@ -197,9 +197,9 @@ function showOutput(id, name) {
 
 <div class='heading'>
 <h1>Demotesting result</h1>
-<p class='attribute'><strong>Start Time:</strong> 2016-11-25 23:37:10</p>
-<p class='attribute'><strong>Duration:</strong> 0:00:00.002002</p>
-<p class='attribute'><strong>Status:</strong> Pass 2 Error 1</p>
+<p class='attribute'><strong>Start Time:</strong> 2016-12-09 00:40:38</p>
+<p class='attribute'><strong>Duration:</strong> 0:00:00.005003</p>
+<p class='attribute'><strong>Status:</strong> Pass 1 Error 2</p>
 
 <p class='description'></p>
 </div>
@@ -223,7 +223,7 @@ function showOutput(id, name) {
 <col align='right' />
 </colgroup>
 <tr id='header_row'>
-    <td class='test-cases'>Test Group/Test case</td>
+    <td class='test-cases'>测试案例</td>
     <td>Count</td>
     <td>Pass</td>
     <td>Fail</td>
@@ -235,19 +235,23 @@ function showOutput(id, name) {
 </tr>
 
 <tr class='errorClass'>
-    <td>unittest.loader._FailedTest</td>
+    <td>test_htmlReport.ReportTest</td>
+    <td>2</td>
     <td>1</td>
     <td>0</td>
-    <td>0</td>
     <td>1</td>
-    <td><a href="javascript:showClassDetail('c1',1)">Detail</a></td>
+    <td><a href="javascript:showClassDetail('c1',2)">Detail</a></td>
     <td></td>
-    <td><a href="javascript:showClassDetail('c1',1)">查看测试步骤</a></td>
+    <td><a href="javascript:showClassDetail('c1',2)">查看测试步骤</a></td>
 </tr>
 
 <tr id='ft1.1' class='none'>
-    <td class='errorCase'><div class='testcase'>test_db</div></td>
-    <td colspan='5' align='center'>
+    <td class='errorCase'><div class='testcase'>test_report</div></td>
+    <td></td>
+    <td></td>
+    <td></td>
+
+    <td colspan='1' align='center'>
 
     <!--css div popup start-->
     <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.1')" >
@@ -260,107 +264,122 @@ function showOutput(id, name) {
         </div>
         <pre>
         
-ft1.1: ImportError: Failed to import test module: test_db
-Traceback (most recent call last):
-  File "C:\Program Files\lib\unittest\loader.py", line 428, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "C:\Program Files\lib\unittest\loader.py", line 369, in _get_module_from_name
-    __import__(name)
-  File "D:\projects\python\autoMationCore\pyQa\unit_test\test_db.py", line 3, in &lt;module&gt;
-    from pyQa.database.oracleUtil import OracleUtil
-  File "D:\projects\python\autoMationCore\pyQa\database\oracleUtil.py", line 3, in &lt;module&gt;
-    import cx_Oracle
-ImportError: DLL load failed: 找不到指定的模块。
-
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-    
-    </td>
-    <td></td>
-    <td></td>
-</tr>
-
-<tr class='passClass'>
-    <td>test_htmlReport.ReportTest</td>
-    <td>2</td>
-    <td>2</td>
-    <td>0</td>
-    <td>0</td>
-    <td><a href="javascript:showClassDetail('c2',2)">Detail</a></td>
-    <td></td>
-    <td><a href="javascript:showClassDetail('c2',2)">查看测试步骤</a></td>
-</tr>
-
-<tr id='pt2.1' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_report</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.1')" >
-        Pass</a>
-
-    <div id='div_pt2.1' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt2.1').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt2.1: setup
-&lt;pyQa.HTMLTestRunnerNB.OutputRedirector object at 0x000001D4CC73EF98&gt; &lt;DESC_BEGIN&gt;TC001:这个case是生产报告&lt;DESC_END&gt;
-&lt;pyQa.HTMLTestRunnerNB.OutputRedirector object at 0x000001D4CC73EF98&gt; &lt;STEP_BEGIN&gt;点击元素: //a['登陆']1&lt;STEP_END&gt;
-&lt;pyQa.HTMLTestRunnerNB.OutputRedirector object at 0x000001D4CC73EF98&gt; &lt;STEP_BEGIN&gt;等待元素://a['登陆']1&lt;STEP_END&gt;
+ft1.1: setup
+&lt;pyQa.HTMLTestRunnerNB.OutputRedirector object at 0x00000214E7827278&gt; &lt;DESC_BEGIN&gt;TC001:这个case是生产报告&lt;DESC_END&gt;
+&lt;pyQa.HTMLTestRunnerNB.OutputRedirector object at 0x00000214E7827278&gt; &lt;STEP_BEGIN&gt;点击元素: //a['登陆']1&lt;STEP_END&gt;
+&lt;pyQa.HTMLTestRunnerNB.OutputRedirector object at 0x00000214E7827278&gt; &lt;STEP_BEGIN&gt;等待元素://a['登陆']1&lt;STEP_END&gt;
+2016-12-09 00:40:38:meet error when generate report
 tearDown
+Traceback (most recent call last):
+  File "D:\projects\python\autoMationCore\pyQa\unit_test\test_htmlReport.py", line 16, in test_report
+    Log.log_error_info("meet error when generate report")
+  File "D:\projects\python\autoMationCore\pyQa\log\log.py", line 14, in log_error_info
+    raise Exception("Assert error:", info)
+Exception: ('Assert error:', 'meet error when generate report')
 
 
         </pre>
     </div>
     <!--css div popup end-->
-    
     </td>
+    <td></td>
     <td>TC001:这个case是生产报告</td>
     <td><span style='color:blue'>点击元素: //a['登陆']1</span><br/><span style='color:blue'>等待元素://a['登陆']1</span><br/></td>
 </tr>
 
-<tr id='pt2.2' class='hiddenRow'>
+<tr id='pt1.2' class='hiddenRow'>
     <td class='none'><div class='testcase'>test_report1</div></td>
-    <td colspan='5' align='center'>
+    <td></td>
+    <td></td>
+    <td></td>
+
+    <td colspan='1' align='center'>
 
     <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.2')" >
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.2')" >
         Pass</a>
 
-    <div id='div_pt2.2' class="popup_window">
+    <div id='div_pt1.2' class="popup_window">
         <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt2.2').style.display = 'none' " >
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.2').style.display = 'none' " >
            [x]</a>
         </div>
         <pre>
         
-pt2.2: setup
-&lt;pyQa.HTMLTestRunnerNB.OutputRedirector object at 0x000001D4CC73EF98&gt; &lt;DESC_BEGIN&gt;TC002:/api/test/case/10001:8080/news&lt;DESC_END&gt;
-&lt;pyQa.HTMLTestRunnerNB.OutputRedirector object at 0x000001D4CC73EF98&gt; &lt;STEP_BEGIN&gt;等待元素:(xpath: //div/html/div[1]/a[contains(text(),'点击上传')]//a['登陆'])&lt;STEP_END&gt;
+pt1.2: setup
+&lt;pyQa.HTMLTestRunnerNB.OutputRedirector object at 0x00000214E7827278&gt; &lt;DESC_BEGIN&gt;TC002:/api/test/case/10001:8080/news&lt;DESC_END&gt;
+&lt;pyQa.HTMLTestRunnerNB.OutputRedirector object at 0x00000214E7827278&gt; &lt;STEP_BEGIN&gt;等待元素:(xpath: //div/html/div[1]/a[contains(text(),'点击上传')]//a['登陆'])&lt;STEP_END&gt;
 tearDown
 
 
         </pre>
     </div>
     <!--css div popup end-->
-    
     </td>
+    <td></td>
     <td>TC002:/api/test/case/10001:8080/news</td>
     <td><span style='color:blue'>等待元素:(xpath: //div/html/div[1]/a[contains(text(),'点击上传')]//a['登陆'])</span><br/></td>
+</tr>
+
+<tr class='errorClass'>
+    <td>test_htmlReport.ReportTest1</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c2',1)">Detail</a></td>
+    <td></td>
+    <td><a href="javascript:showClassDetail('c2',1)">查看测试步骤</a></td>
+</tr>
+
+<tr id='ft2.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_report</div></td>
+    <td></td>
+    <td></td>
+    <td></td>
+
+    <td colspan='1' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft2.1')" >
+        Error</a>
+
+    <div id='div_ft2.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft2.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+ft2.1: setup
+&lt;pyQa.HTMLTestRunnerNB.OutputRedirector object at 0x00000214E7827278&gt; &lt;DESC_BEGIN&gt;TC002:这个case是生产报告&lt;DESC_END&gt;
+&lt;pyQa.HTMLTestRunnerNB.OutputRedirector object at 0x00000214E7827278&gt; &lt;STEP_BEGIN&gt;发送 https://baidu.com/1/news&lt;STEP_END&gt;
+&lt;pyQa.HTMLTestRunnerNB.OutputRedirector object at 0x00000214E7827278&gt; &lt;STEP_BEGIN&gt;发送 https://baidu.com/1/news&lt;STEP_END&gt;
+2016-12-09 00:40:38:meet error when generate report
+tearDown
+Traceback (most recent call last):
+  File "D:\projects\python\autoMationCore\pyQa\unit_test\test_htmlReport.py", line 36, in test_report
+    Log.log_error_info("meet error when generate report")
+  File "D:\projects\python\autoMationCore\pyQa\log\log.py", line 14, in log_error_info
+    raise Exception("Assert error:", info)
+Exception: ('Assert error:', 'meet error when generate report')
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <td></td>
+    <td>TC002:这个case是生产报告</td>
+    <td><span style='color:blue'>发送 https://baidu.com/1/news</span><br/><span style='color:blue'>发送 https://baidu.com/1/news</span><br/></td>
 </tr>
 
 <tr id='total_row'>
     <td>Total</td>
     <td>3</td>
-    <td>2</td>
-    <td>0</td>
     <td>1</td>
+    <td>0</td>
+    <td>2</td>
     <td>&nbsp;</td>
     <td></td>
     <td></td>

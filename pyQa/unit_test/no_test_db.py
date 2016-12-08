@@ -1,10 +1,12 @@
 from  unittest import TestCase
 from pyQa.database.mysqlUtil import MysqlUtil
 from pyQa.database.oracleUtil import OracleUtil
+from pyQa.log.log import Log
 import pdb
 
 
 def test_query_update_oracle():
+    Log.log_case_desc("TC001:test_query_update_oracle")
     host = ""
     user = ""
     password =  ""
@@ -25,6 +27,7 @@ def test_query_update_oracle():
     
     
 def test_query_update_mysql():
+    Log.log_case_desc("TC001:test_query_update_mysql")
     host = ""
     user =  ""
     password =  ""

@@ -443,7 +443,7 @@ a.popup_link:hover {
 <col align='right' />
 </colgroup>
 <tr id='header_row'>
-    <td class='test-cases'>Test Group/Test case</td>
+    <td class='test-cases'>测试案例</td>
     <td>Count</td>
     <td>Pass</td>
     <td>Fail</td>
@@ -484,7 +484,11 @@ a.popup_link:hover {
     REPORT_TEST_WITH_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s'><div class='testcase'>%(desc)s</div></td>
-    <td colspan='5' align='center'>
+    <td></td>
+    <td></td>
+    <td></td>
+
+    <td colspan='1' align='center'>
 
     <!--css div popup start-->
     <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_%(tid)s')" >
@@ -500,8 +504,8 @@ a.popup_link:hover {
         </pre>
     </div>
     <!--css div popup end-->
-    
     </td>
+    <td></td>
     <td>%(test_desc)s</td>
     <td>%(html)s</td>
 </tr>
@@ -815,6 +819,7 @@ class HTMLTestRunnerNB(Template_mixin):
         steps_list = self._parse_steps(result_log)
 
         html = ""
+
         test_desc = self._parse_test_desc(result_log)
    
         for step in steps_list:
