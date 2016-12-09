@@ -27,7 +27,7 @@ NAME ="pyQa"
 名字，一般放你包的名字即可
 """
  
-PACKAGES =["pyQa","pyQa/database","pyQa/global_list","pyQa/httpHander","pyQa/log","pyQa/utils","pyQa/web",
+PACKAGES =["pyQa","pyQa/database","pyQa/globalFactory","pyQa/httpHander","pyQa/log","pyQa/utils","pyQa/web",
                      "pyQa/unit_test"]
 """
 包含的包，可以多个，这是一个列表
@@ -65,7 +65,7 @@ URL =""
 你这个包的项目地址，如果有，给一个吧，没有你直接填写在PyPI你这个包的地址也是可以的
 """
  
-VERSION ="1.5.7"
+VERSION ="1.5.8"
 """
 最后版本生成时间:  2016-11-30
 """

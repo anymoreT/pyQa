@@ -374,7 +374,7 @@ a.popup_link:hover {
 .test-cases {
     width: 20%
 }
-#result_table
+#result_table 
 #header_row {
     font-weight: bold;
     color: white;
@@ -632,7 +632,7 @@ class _TestResult(TestResult):
             sys.stderr.write('F')
 
 
-class HTMLTestRunner(Template_mixin):
+class HTMLTestRunnerNB(Template_mixin):
     """
     """
     def __init__(self, stream=sys.stdout, verbosity=1, title=None, description=None):
@@ -653,7 +653,7 @@ class HTMLTestRunner(Template_mixin):
     def run(self, test):
         "Run the given test case or test suite."
         result = _TestResult(self.verbosity)
-
+   
         test(result)
         self.stopTime = datetime.datetime.now()
         self.generateReport(test, result)
@@ -671,7 +671,7 @@ class HTMLTestRunner(Template_mixin):
         for n,t,o,e in result_list:
             cls = t.__class__
             #if not rmap.has_key(cls):
-            if  not cls in rmap:
+            if  not cls in rmap:  
                 rmap[cls] = []
                 classes.append(cls)
             rmap[cls].append((n,t,o,e))
@@ -807,7 +807,7 @@ class HTMLTestRunner(Template_mixin):
             # ue = unicode(e.encode('string_escape'))
             #ue = e.decode('latin-1')
 			#ue = e.decode('utf-8')
-            ue = e
+            ue = e 
         else:
             ue = o
         result_log = uo + ue
@@ -821,7 +821,7 @@ class HTMLTestRunner(Template_mixin):
         html = ""
 
         test_desc = self._parse_test_desc(result_log)
-
+   
         for step in steps_list:
             html += "<span style='color:blue'>" + step + "</span><br/>"
         row = tmpl % dict(
@@ -837,11 +837,11 @@ class HTMLTestRunner(Template_mixin):
         rows.append(row)
         if not has_output:
             return
-
+    
     def _parse_steps(self, steps):
         pattern = re.compile("<STEP_BEGIN>(.*?)<STEP_END>",re.MULTILINE|re.IGNORECASE|re.DOTALL)
         return  re.findall( pattern,steps)
-
+    
     def _parse_test_desc(self, test_desc):
         pattern = re.compile("<DESC_BEGIN>(.*?)<DESC_END>",re.MULTILINE|re.IGNORECASE|re.DOTALL)
         result_list = re.findall( pattern,test_desc)
@@ -849,8 +849,8 @@ class HTMLTestRunner(Template_mixin):
             return ""
         else:
             return result_list[0]
-
-
+             
+    
     def _generate_ending(self):
         return self.ENDING_TMPL
 
@@ -872,7 +872,7 @@ class TestProgram(unittest.TestProgram):
         # base class's testRunner parameter is not useful because it means
         # we have to instantiate HTMLTestRunner before we know self.verbosity.
         if self.testRunner is None:
-            self.testRunner = HTMLTestRunner(verbosity=self.verbosity)
+            self.testRunner = HTMLTestRunnerNB(verbosity=self.verbosity)
         unittest.TestProgram.runTests(self)
 
 main = TestProgram

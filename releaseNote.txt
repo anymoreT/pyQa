@@ -22,4 +22,9 @@ Vesrsion1.5.7:
 	1. 添加测试步骤描述
 	2.weblement支持以页面为单位，调用tuple结构体，定位元素
 
+Vesrsion1.5.8:
+	1. 修改报表显示，使其更美观
+	2. 新命令包globalVars包，用于设置全局变量
+
+
 	
