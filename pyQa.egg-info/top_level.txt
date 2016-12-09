@@ -1,6 +1,6 @@
 pyQa
 pyQa/database
-pyQa/global_list
+pyQa/globalFactory
 pyQa/httpHander
 pyQa/log
 pyQa/unit_test
