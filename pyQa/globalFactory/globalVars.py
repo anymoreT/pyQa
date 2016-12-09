@@ -16,13 +16,18 @@ class GlobalFactory(object):
     def set_driver(driver):
         GlobalFactory.Driver = driver
 
-    #增加error统计
     @staticmethod
     def add_error_count():
+        '''
+        获取error统计
+        '''
         GlobalFactory.ErrorCount += 1
 
-        # 增加error统计
+
 
     @staticmethod
     def get_error_count():
+        '''
+        获取error统计
+        '''
         return GlobalFactory.ErrorCount
