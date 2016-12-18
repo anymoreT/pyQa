@@ -1,3 +1,4 @@
+'''
 # -*- coding:utf-8 -*-
 import os
 import cx_Oracle
@@ -30,4 +31,4 @@ class OracleUtil(object):
         cursor = self.oracle_instance.cursor()
         cursor.execute(sql)
         self.oracle_instance.commit()
-#
+'''

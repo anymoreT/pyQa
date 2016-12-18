@@ -1,6 +1,7 @@
+'''
 from  unittest import TestCase
 from pyQa.database.mysqlUtil import MysqlUtil
-from pyQa.database.oracleUtil import OracleUtil
+#from pyQa.database.oracleUtil import OracleUtil
 from pyQa.log.log import Log
 import pdb
 
@@ -55,4 +56,4 @@ def run_database_test():
     
 run_database_test()    
     
-    
+'''

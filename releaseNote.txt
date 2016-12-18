@@ -26,5 +26,7 @@ Vesrsion1.5.8:
 	1. 修改报表显示，使其更美观
 	2. 新命令包globalVars包，用于设置全局变量
 
+Vesrsion1.5.9:
+    1.注销掉oracel的支持
 
 	

@@ -2,5 +2,5 @@ selenium==2.48.0
 PyMySQL==0.6.7
 PyYAML==3.11
 requests==2.9.0
-cx-Oracle
+
 
