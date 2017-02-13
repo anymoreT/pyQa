@@ -29,4 +29,7 @@ Vesrsion1.5.8:
 Vesrsion1.5.9:
     1.注销掉oracel的支持
 
+Vesrsion1.6.0:
+    1.更新HttpHandle类，不再继承TestCase类。修改检查结果的发方法名字为response_keys_type_is_right，response_key_value_is_right
+
 	

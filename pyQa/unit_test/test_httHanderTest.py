@@ -30,7 +30,7 @@ def test_replace_paramter_for_url():
     Log.log_info("test_replace_paramter_for_url is ok")
 
     
-def tes_resonse_deep_key_is_struct():
+def tes_response_keys_type_is_right():
     '''
     #可以验证如下的类型
     #TYPES = {"STRING" : str, "HASH" : dict, "INT" : int, "FLOAT" : float, "LIST" : list, "BOOL" : bool}
@@ -40,10 +40,10 @@ def tes_resonse_deep_key_is_struct():
     setattr(response, '_content',  content)
     instance = httpHandler.HttpHandle()
     instance.http_response = response
-    instance.response_deep_key_is_struct(target_struct = {"content" : "HASH", "result" :"STRING", "errors" : "LIST"})
-    instance.response_deep_key_is_struct("content", "list", 0,  target_struct = {"name" : "STRING", "type" :"HASH", "birthday":"NULL","index" : "INT", "verify" : "BOOL"})
+    instance.response_keys_type_is_right(target_struct = {"content" : "HASH", "result" :"STRING", "errors" : "LIST"})
+    instance.response_keys_type_is_right("content", "list", 0,  target_struct = {"name" : "STRING", "type" :"HASH", "birthday":"NULL","index" : "INT", "verify" : "BOOL"})
 
-def response_deep_key_value_is_right():
+def response_key_value_is_right():
     '''
     #可以数据正确性
     '''
@@ -54,10 +54,10 @@ def response_deep_key_value_is_right():
     instance.http_response = response
     instance.print_response_body()
     instance.get_response_struct()
-    instance.response_deep_key_value_is_right("data", target_value= {"name" :"黄勇"})
-    instance.response_deep_key_value_is_right("data", "info", 0, target_value= {"id":12345})
-    instance.response_deep_key_value_is_right("data", "info", 0, target_value= {"id":12345,"gender":None})
-    instance.response_deep_key_value_is_right("data", target_value=  {"name":"黄勇","info":[{"id":12345,"gender":None}]})
+    instance.response_key_value_is_right("data", target_value= {"name" :"黄勇"})
+    instance.response_key_value_is_right("data", "info", 0, target_value= {"id":12345})
+    instance.response_key_value_is_right("data", "info", 0, target_value= {"id":12345,"gender":None})
+    instance.response_key_value_is_right("data", target_value=  {"name":"黄勇","info":[{"id":12345,"gender":None}]})
 
 
 
@@ -152,11 +152,11 @@ def test_conver_json_str_response_to_struct():
         instance.http_response = response
         TestCase().assertTrue( {"content": True, "int":1} == instance.conver_json_str_response_to_struct())
                
-        
+
 
 def run_unit_test():
     test_replace_paramter_for_url()
-    tes_resonse_deep_key_is_struct()
+    tes_response_keys_type_is_right()
     test_get_response_body()
     test_print_response_body()
     test_get_header()
@@ -165,6 +165,6 @@ def run_unit_test():
     test_response_body_should_be_list_struct()
     test_response_body_should_be_dictionary_struct()
     test_conver_json_str_response_to_struct()
-    response_deep_key_value_is_right()
+    response_key_value_is_right()
     
 run_unit_test()

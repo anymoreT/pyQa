@@ -5,7 +5,7 @@ from pyQa.log.log import Log
 import pdb
 from unittest import TestCase
    
-class HttpHandle(TestCase):
+class HttpHandle(object):
     '''
     集成TestCase，主要是为了能够使用各种assert判定
     系统定义如下格式转意：
@@ -163,12 +163,19 @@ class HttpHandle(TestCase):
             self.http_response_body = self.http_response.content     
         return  self.http_response_body
     
-    #打印结果
-    def print_response_body(self): 
+    #打印原始数据结果
+    def print_response_body(self):
         '''
         打印结果
         '''
         Log.log_info(self.get_response_body())
+
+    #打印转换成python结构的结果
+    def print_response_python_strcut_body(self):
+        '''
+        打印转换成python结构的结果
+        '''
+        Log.log_info(str(self.get_response_struct()))
         
     #将响应内容转换成python结构 
     def  conver_response_body_to_struct(self):
@@ -334,13 +341,15 @@ class HttpHandle(TestCase):
             Log.log_info("Verify..., response content is ok.")
         Log.log_step("检查响应不含有字符串:%s" % (sub_string))
      
-    #可以检查检查响应的深层级字段的类型
+    #检查响应的各个层级字段的类型
     #kwargs: target_struct={}
-    #e.g response_deep_key_is_struct("content", "list", 0,  target_struct = {"name" : "STRING", "type" :"HASH", "index" : "INT", "verify" : "BOOL"})
-    def response_deep_key_is_struct(self, *args, **kwargs):
+    #e.g response_keys_type_check("content", "list", 0,  target_struct = {"name" : "STRING", "type" :"HASH", "index" : "INT", "verify" : "BOOL"})
+    #e.g response_keys_type_check(target_struct = {"name" : "STRING", "type" :"HASH", "index" : "INT", "verify" : "BOOL"})
+    def response_keys_type_is_right(self, *args, **kwargs):
         '''
         判断响应的python格式的指定字段格式如target_struct指定的格式．
-        eg.  response_deep_key_is_struct("content", "list", 0,  target_struct = {"name" : "STRING", "type" :"HASH", "index" : "INT", "verify" : "BOOL"})
+        eg.  response_keys_type_check("content", "list", 0,  target_struct = {"name" : "STRING", "type" :"HASH", "index" : "INT", "verify" : "BOOL"})
+        #e.g response_keys_type_check(target_struct = {"name" : "STRING", "type" :"HASH", "index" : "INT", "verify" : "BOOL"})
         该结果表示将结果的result['content']['list'][0]同target_struct指定的字段和类型做对比
         '''
         target_struct = kwargs["target_struct"]
@@ -356,12 +365,13 @@ class HttpHandle(TestCase):
                 if not  isinstance(content[key], HttpHandle.TYPES[value]):
                     Log.log_error_info("Verify..., the type of key %s is not %s "%(key, value))
         Log.log_info("Verify..., response deep key type is ok.")
-        Log.log_step("检查响应结构符合指定格式要求" )
+        Log.log_step("检查响应结构内容符合指定内容" )
 
-    #可以检查检查响应的深层级字段的内容
+    #检查响应的各层级字段的内容
     #kwargs: target_struct={}
     #e.g response_deep_key_is_struct("content", "list", 0,  target_value = {"name" : "benhuang",  "index" : "7", "verify" : "true"})
-    def response_deep_key_value_is_right(self, *args, **kwargs):
+    # e.g response_deep_key_is_struct(target_value = {"name" : "benhuang",  "index" : "7", "verify" : "true"})
+    def response_key_value_is_right(self, *args, **kwargs):
         '''
         判断响应的python格式的指定字段格式如target_struct指定的格式．
         eg.  response_deep_key_is_struct("content", "list", 0,  target_value = {"name" : "benhuang",  "index" : "7", "verify" : "true"})
